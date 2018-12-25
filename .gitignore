@@ -1,0 +1,8 @@
+*.iml
+.idea/
+.vscode/
+
+# 图片
+*.png
+*.jpg
+*.jpeg
