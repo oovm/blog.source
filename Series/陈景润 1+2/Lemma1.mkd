@@ -23,8 +23,8 @@ $$\frac {\partial^{r}} {\partial \omega^{r}} \left(\frac {y^{\omega}} {\omega}\r
 
 由于
 
-![](https://i.loli.net/2018/12/26/5c233ef1a2965.png)
-
+![](/Lemma1/20190105040929798.png)
+![](/Lemma1/20190105040940256.png)
 
 
 $$\begin{aligned}
