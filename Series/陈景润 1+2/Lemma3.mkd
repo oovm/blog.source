@@ -1,27 +1,28 @@
 
-::: lemma Lemma 3
-当 $S = \sigma + i t$ 和 $\sigma>=\frac12$ 时, 则有
+:::lemma Lemma 3
+当 $S=\sigma+\i t$ 和 $\sigma>=\dfrac12$ 时, 则有
 
-$$\sum_{q<=Q}\sum_{ x _ { q } } {}^ {* } \left| L \left( S , \chi _ { q } \right) \right| ^ { 4 } << Q ^ { 2 } | S | ^ { 2 } ( \log Q ) ^ { 4 }​$$
+$$\sum_{q<=Q}\sum_{x_{q}}{}^{*}\left|L\left(S, \chi_{q}\right)\right|^{4}<<Q^{2}|S|^{2}(\log Q)^{4}​$$
 :::
 
-
 **证明:** 我们有:
-![](/Lemma3/20190105041204605.png)
-![](/Lemma3/20190105041221916.png)
+
 $$\begin{aligned}
-L ( S , \chi ) &= \sum _ { n = 1 } ^ { \infty } \frac { \chi ( n ) } { n ^ { S } } \\
-&= \sum _ { n = 1 } ^ { N } \frac { \chi ( n ) } { n ^ { s } } + \sum _ { n = N + 1 } ^ { \infty } \frac { \sum _ { i \leq n } ^ { \infty } \chi ( i ) - \sum _ { i \leq n - 1 } \chi ( i ) } { n ^ { s } } 
-&=
+L(S, \chi)&=\sum_{n=1}^{\infty}\frac{\chi(n)}{n^{S}}\\
+&=\sum_{n=1}^{N}\frac{\chi(n)}{n^{s}}+\sum_{n=N+1}^{\infty}\frac{\displaystyle\sum_{i<=n}\chi(i)-\sum_{i<=n-1}\chi(i)}{n^{s}}\\
+&=\sum_{n = 1}^{N} \frac{\chi (n)} {n^{s}} + \sum_{n = N + 1}^{\infty} \{(\sum_{i<=n} \chi (i)) (\frac {1} {n^{S}} - \frac {1} {(n + 1)^{s}})\} - \frac {1} {(N + 1)^{s}} \sum_{i<=N} \chi (i)\\
+&=\sum_{n = 1}^{N} \frac {\chi (n)} {n^{s}} + O\left(\frac {| S | q^{1 / 2} \log q} {N^{\sigma}}\right)
 \end{aligned}$$
 
+故由 **Lemma2** 以及 $\sigma>=\dfrac12$, 我们有:
 
-故由 **Lemma 2** 以及 $\sigma>=\dfrac12$, 我们有:
+$$\begin{aligned}
 
-
-
-
-
+&\sum_{q \leq Q} \sum_{\chi_q}{}^{*} | L (S , \chi_{q}) |^{4}\\
+<<&\sum_{q \leq Q} \sum_{\chi_q}{}^{*}(|\sum_{n=1}^{[Q|S|]}\frac {\chi_{q} (n)} {n^{s}} |^{4} + Q^{- 2} | S |^{2} q^{2} (\log q)^{4})\\
+<<&| S |^{2} Q^{2} (\log Q)^{4} + (Q^{2} + Q^{2} | S |^{2})\sum_{n=1}^{[Q|S|]}\frac {d^{2} (n)} {n}\\
+<<&Q^{2} | S |^{2} (\log Q)^{4}
+\end{aligned}$$
 故本引理得证
 
 ---

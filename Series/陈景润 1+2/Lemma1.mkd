@@ -49,7 +49,7 @@ $$\begin{aligned}
 
 又当  $y \geq e^{2 (\log x) - 1.0}$  时, 有
 
-[^_^]: 为什么这里要写1.0?
+[>_<]: 为什么这里要写1.0?
 
 $$\begin{aligned}
 0 < 1 - \Phi (y)
@@ -63,3 +63,4 @@ $$\begin{aligned}
 
 其中用到 $\log x\geq10^4$ 及当 $\lambda\geq1$ 时, 有 $e^{\log (1 + \lambda)} \leq e^{\lambda \log 2}$.
 
+---
