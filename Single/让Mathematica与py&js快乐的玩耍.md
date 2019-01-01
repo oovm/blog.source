@@ -1,10 +1,14 @@
 title: 让Mathematica与py&js快乐的玩耍
-tags:  {"Mathematica", "tutorial", "ZeroMQ"}
+tags:
+  - Mathematica
+  - tutorial
+  - ZeroMQ
 date: GMT[{2018, 2, 23, 10, 35, 35}, 8]
 update: GMT[{2018, 3, 10, 12, 17, 00}, 8]
 categories:
   - GALASTER'S DIMENSION
   - CODE➤GEASS
+copyright: true
 
 ===
 
