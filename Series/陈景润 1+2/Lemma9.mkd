@@ -82,9 +82,12 @@ $$\begin{aligned}
 
 **注:**
 
-```mathematica
-i1=Integrate[Log[t-1]/t, {t, 2, 4-10a}, Assumptions->0.2>a>0.1]
-i2=Log[8]+NIntegrate[i1/(Pi-2Pi a), {a, 1/10, 1/5}]
-i3=i2(8+10Sqrt[E])
-```
+$$\begin{aligned}
+&\int_{3}^{4} \frac {d u} {u} \int_{2}^{u - 1} \frac {\log (t - 1)} {t} d t\\
+=&\int_{3}^{4}\frac{4 \text{Li}_2(u-1)+4 i \pi  \log (u-1)-\pi ^2}{4 u}\dd{u}\\
+\approx&0.0148863\\
+&\int_{\frac {1} {10}}^{\frac {1} {3}} \frac {d \alpha} {2 \pi (1/2 - \alpha)} \int_{2}^{4 - 10 a} \frac {\log (t - 1)} {t} d t\\
+=&\int_{\frac {1} {10}}^{\frac {1} {3}}\frac{4 \text{Li}_2(4-10 a)+4\pi i \log (4-10 a)-\pi^2 }{4 \pi  (2 a-1)}\dd{\alpha}\\
+\approx& 0.00236924
+\end{aligned}$$
 

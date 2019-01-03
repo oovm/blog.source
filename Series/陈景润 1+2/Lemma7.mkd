@@ -1,12 +1,34 @@
-![](/Lemma7/20190105085132202.png)
+![](./Lemma7/20190105085132202.png)
 
-![](/Lemma7/20190105085147651.png)
+::: lemma Lemma 8
+对于大偶数 $x$, 我们有
 
-![](/Lemma7/20190105085158663.png)
+$$M_{1} \leq \Xi\left\{\frac {(8 + 24 \varepsilon) x C_{x}} {\log x} \right\}$$
 
-![](/Lemma7/20190105085208413.png)
+其中:
 
-![](/Lemma7/20190105085218485.png)
+$$\begin{aligned}
+C_x &= \prod_{p !| x \atop p > 2} \frac {p - 1} {p - 2} \prod_{p > 2} (1 - \frac {1} {(p - 1)^{2}})\\
+\Xi&=\sum_{(x,p_1,p_2)}\frac {1} {p_{1} p_{2} \log \dfrac {x} {p_{1} p_{2}}}\\
+(x,p_1,p_2)&=x^{\frac{1}{10}} < p_{1} \leq x^{\frac13} < p_{2} \leq (x / p_{1})^{\frac12}
+\end{aligned}$$
+:::
+
+证:
+
+令 $\displaystyle S = \sum_{{1 \leq k \leq (x^{1 / 2 - \epsilon})^{1 / 2}} \atop {(k , x) = 1}} \frac {\mu^{2} (k)} {f (k)}$, 则有:
 
 
-![](/Lemma7/20190105085228760.png)
+
+$$$$
+
+![](./Lemma7/20190105085147651.png)
+
+![](./Lemma7/20190105085158663.png)
+
+![](./Lemma7/20190105085208413.png)
+
+![](./Lemma7/20190105085218485.png)
+
+
+![](./Lemma7/20190105085228760.png)
