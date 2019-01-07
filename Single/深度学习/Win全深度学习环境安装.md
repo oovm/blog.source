@@ -15,10 +15,10 @@ conda activate deeplearning
 然后添加一些中心包服务器, 比如 `conda-forge` 是一定要有的, 不然很多包都下不到.
 
 ```bash
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
 conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/
 conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch/
 conda config --add channels willyd
-conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
 conda config --set show_channel_urls yes
 conda config --show channels
 ```
@@ -32,15 +32,19 @@ conda config --remove channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkg
 最后直接一条命令安装即可
 
 ```bash
-conda install mxnet tensorflow keras caffe-cpu pytorch-cpu -y
+conda install tensorflow keras caffe-cpu pytorch-cpu -y
+pip install mxnet 
 ```
 
-然后由于 conda 实在是非常非常的慢, 可以去睡一觉
+千万不要加 `-c` 除非你住在墙外.
+
+然后由于 conda 实在是非常非常的慢, 现在可以去睡一觉
 
 等一觉醒来就可以愉快的使用各大深度学习环境啦
 
 当然可能由于网络连接问题中断, 那没办法了, 一遍不行就只能再装一遍了
 
+---
 
 最后还可以装一些常用的模型库
 

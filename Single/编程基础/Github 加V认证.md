@@ -1,3 +1,4 @@
+---
 title: Gayhub 加V认证
 date: GMT[{2017, 11, 11, 19, 02, 35}, 8]
 tags:
@@ -6,9 +7,7 @@ tags:
   - BiGrid
 categories:
   - GALASTER’S DIMENSION
-copyright: true
-
-===
+---
 
 任何社交网站都有大V, 那全球最大的同性交友网站自然也有咯.
 

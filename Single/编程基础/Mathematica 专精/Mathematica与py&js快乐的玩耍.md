@@ -1,4 +1,4 @@
-title: 让Mathematica与py&js快乐的玩耍
+title: Mathematica与py&js快乐的玩耍
 tags:
   - Mathematica
   - tutorial
