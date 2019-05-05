@@ -6,3 +6,9 @@
 *.png
 *.jpg
 *.jpeg
+
+# 数据
+*.xlsx
+
+# 笔记本
+*.nb
