@@ -1,0 +1,306 @@
+---
+title: x = cos x
+date: 2018-04-30 23:58:17
+tags:
+categories:
+---
+
+### 玩计算器的发现
+
+大家都玩过计算器吧, 不知注意到没有.
+
+输入任意数, 然后不断按 $\mathtt{cos\ ANS}$ 最后总会输出$0.739085$.
+
+什么, 你说明明记得是: $0.999847$? 哦, 因为你用了角度制.
+
+这一系列操作等价于求解方程 $x=\cos x$, 角度制下就是 $x=\cos x°=\cos\dfrac{\pi x}{180}$.
+
+当然对于现在的你来说求数值解没啥意思了, 要求就求解析解是吧.
+
+不过这两个方程其实是一样的, 我们先变个形:
+
+
+$$\begin{aligned}
+x=\cos x\;\Longrightarrow& x-\frac{\pi}{2}=\cos \left(x-\frac{\pi}{2}\right)&=\sin x\\
+x=\cos x°\Longrightarrow& \frac{180 x}{\pi }-90=\cos \left(\frac{ \pi}{180}  \left(\frac{180 x}{\pi }-90\right)\right)&=\sin x
+\end{aligned}$$
+
+也就是说:
+
+于是我们现在只要解决 $Ax-B=\sin(x)$ 这一个方程了.
+
+最早研究这个问题的是天文学家, 毕竟那时候也没什么计算器给你玩, 一切要从实际出发...
+
+### 开普勒方程
+
+你可能听说过, 三体问题很困难, 直到一百多年前的庞加莱时代才被搞定.
+
+而二体问题则简单的多, 400年前开普勒时代就研究的差不多了.
+
+你至少知道这个成果, 两个天体以一个为交点, 另一个必定在圆锥曲线上运动.
+
+![椭圆轨道][https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Kepler%27s_equation_scheme.svg/390px-Kepler%27s_equation_scheme.svg.png]
+
+一般天体遵循椭圆轨道, 如图椭圆是实际运行的轨道, 与椭圆相切的是一个以半长轴为半径的辅助圆.
+
+在一定的时间$t$内, 椭圆轨道上的质点运行到了$p$点, 而辅助圆上的假想质点运行到了$y$点.
+
+- 椭圆轨道上所转过的角度$\angle T$被称为**真近点角(True Anomaly)**
+- 辅助圆轨道上假想质点所转过的角度$\angle M$被称为**平近点角(Mean Anomaly)**
+- 将椭圆上的质点向上作延长线,交辅助圆于$x$点所形成的角$\angle E$被称为**偏近点角(Eccentric Anomaly)**
+
+天文学家发现, 它们满足如下关系式: 
+
+> **Kepler Equation:**
+> $$M= E-\epsilon \sin(E)$$
+
+抛物线就是 $\epsilon=1$ 的特殊情况, 双曲线有所不同.
+
+> **Hyperbolic Kepler Equation:**
+> $$M = \epsilon \sinh H - H \quad\mathrm{where}\quad H=iE$$
+
+但从数学上讲, 这个式子其实就是:
+
+$$M = i \left( E - \epsilon \sin E \right) $$
+
+也就是说不考虑物理意义其实是一样的.
+
+### 开普勒方程的解析解
+
+有了方程当然接下来就是求解了咯, 古代计算力比较值钱, 毕竟没有计算机, 所以大家对解析解都有一种病态的追求.
+
+怎么着推一天公式要比算一整天的牛顿迭代有趣吧?
+
+$$\left\{\begin{aligned}
+\frac{\pi}{2}&=x-\sin x\\
+\frac{\pi}{2}&=x-\frac{\pi}{180}\sin x
+\end{aligned}\right.$$
+
+作一下等价性检验:
+
+```mma
+In []: FindRoot[x==Cos@x,{x,0}]
+       x-Pi/2/.FindRoot[Pi/2==x-Sin@x,{x,1}]
+       FindRoot[x==Cos[Pi x/180],{x,0}]
+       180x/Pi-90/.FindRoot[Pi/2==x-Pi Sin@x/180,{x,1}]
+
+Out[]: 0.7390851332151605` 
+       {x -> 0.7390851332151607`} 
+       0.9998477415310987` 
+       {x -> 0.9998477415310881`} 
+```
+
+#### 拉格朗日反演
+
+$E$不能分离但$M$可以啊, 展开$M(E)$,然后直接用级数反演即可.
+
+$$M(E) = (1-\epsilon)E+\epsilon\sum _{n=1}^{\infty } \frac{(-1)^n}{(2 n+1)!}E^{2 n+1}$$
+
+$$\bigstar E(M)=
+\begin{cases}
+\displaystyle \sum _{n=1}^{\infty }\bigg(\lim_{\theta \to 0^{+}}\!{\frac {\mathrm {d} ^{\,n-1}}{\mathrm {d} \theta ^{\,n-1}}}{\bigg (}{\frac {\theta }{\sqrt[{3}]{\theta -\sin(\theta )}}}{\bigg )}^{\!\!\!n}{\bigg )}{\frac {M^{\frac{n}{3}}}{n!}}&\epsilon=1\\
+\displaystyle \sum_{n=1}^{\infty }\bigg(\lim_{\theta \to 0^{+}}{\frac {\mathrm {d} ^{\,n-1}}{\mathrm {d} \theta ^{\,n-1}}}{\Big (}{\frac {\theta }{\theta -\epsilon\sin(\theta )}}{\Big )}^{\!n}{\bigg )}{\frac {M^{n}}{n!}}&\epsilon\neq 1
+\end{cases}$$
+
+Mathematica 可以很方便的执行级数反演.
+
+```mma
+Series[M-  Sin[M], {M, 0, 10}]//InverseSeries
+Series[M-e Sin[M], {M, 0, 10}]//InverseSeries
+```
+
+早期解这个方程使用了关于离心率$\epsilon$的麦克劳林展开.
+
+$$E(M)=M+\sum_{n=1}^\infty a_n \epsilon^n;\ \epsilon\leq\mathrm{L}$$
+
+这不是个整函数, 所以引入了所谓的拉普拉斯极限.
+
+$$L=\max_{x\in\mathbb{R}}\frac{x}{\cosh (x)}\approx0.662743$$
+
+超出收敛域的部分级数会失效, 级数反演则很好的解决了这个问题.
+
+#### 贝塞尔函数解
+
+当然无穷级数不利于计算, 能否使用微积分表达是我们接下来的探索重点.
+
+我们来考虑函数方程: $g (M) = E (M) - M$
+
+我们假设它可以展开为傅里叶级数, 分析原函数方程性态可以期望这是个正弦级数.
+
+$$g (M) = \sum_{n = 1}^{\infty}a_n\sin (n M)$$
+
+那么系数可以表达为:
+
+$$a_n = \frac {2}{\pi}\int_0^\pi g(M) \sin(nM)\,\mathrm{d}M$$
+
+我们来尝试计算, 嗯? 没思路怎么办...
+
+无脑分部积分展开到能搞定为止呗.
+
+$$\begin{aligned}
+a_n&=\frac{2}{\pi n}\int_0^\pi \cos(nM)\,\mathrm{d}g(M)
+-\frac{2}{\pi}\left[g(M)\frac{\cos(nM)}{n}\right]_0^\pi\\
+&=\frac{2}{\pi n}\int_0^\pi \cos(nM)\,\mathrm{d}(E-M)\\
+&=\frac{2}{\pi n}\int_0^\pi \cos[n(E-\epsilon\sin E)]\,\mathrm{d}E
+-\frac{2}{\pi n}\int_0^\pi \cos(nM)\,\mathrm{d}M\\
+&=\frac{2}{\pi n}\int_0^\pi \cos(nE-n\epsilon\sin E)\,\mathrm{d}E
+\end{aligned}$$
+
+而这正好是贝塞尔函数的定义式之一:
+
+> **Bessel Function of the First Kind:**
+> $$J_n(z)=\frac{1}{\pi}\int_0^\pi \cos(n θ-z \sin θ)\,\mathrm{d}θ\ ;n\in \mathbb{Z}$$
+
+于是原式可以写成 
+
+$$\bigstar E(M)=M+\sum _{n=1}^{\infty } \frac{2}{n}J_n(n \epsilon )\sin(nM)$$
+
+#### 赫维茨-勒奇超越函数解
+
+[Stack Exchange][https://math.stackexchange.com/questions/227317/explaining-cos-infty/1175016#1175016] 上有个用反三角函数和三角函数表示的解析解, 这个解比较有难度.
+
+> $$\mathcal{D}=\frac1\pi \int_0^{\pi } \arctan\left(\tan \left(\frac{t-\sin t+\frac{\pi }{2}}2\right)\right) \,\mathrm{d}t+\frac{1}{\pi }$$
+
+特殊函数论中将以下级数称为**赫维茨-勒奇超越函数(Lerch Transcendent Function)**
+
+$$\Phi (z,t,h):=\sum _{n=0}^{\infty } \frac{z^n}{(h+n)^t}$$
+
+我们从上面的贝塞尔函数解开始, 还原掉贝塞尔函数:
+
+$$E=M+\sum _{n=1}^{\infty } \frac{2}{n}\left[\frac{1}{\pi}\int_0^\pi \cos(n θ-n\epsilon \sin θ)\,\mathrm{d}θ\right]\sin(nM)$$
+
+然后交换积分求和顺序.
+
+$$E=M+\frac{2}{\pi}\int_0^\pi\left[\sum _{n=1}^{\infty } \frac{\sin(nM)}{n} \cos(n θ-n\epsilon \sin θ)\right]\,\mathrm{d}θ$$
+
+里面的部分圈起来叫 $F(M)$, 用欧拉公式展开.
+$$\begin{aligned}
+F(M)=&\frac{\sin(nM)}{n} \cos(n θ-n\epsilon \sin θ)\\
+=&\frac{i}{4 n}\left(e^{-i M n}-e^{i M n}\right) \left(e^{-i (\theta  n-n \epsilon  \sin (\theta ))}+e^{i (\theta  n-n \epsilon  \sin (\theta ))}\right)\\
+=&\frac{i}{4 n}\left(e_1+e_2+e_3+e_4\right)
+\end{aligned}$$
+
+其中:
+
+$$\begin{cases}
+e_1=+\exp(-i M n+i \theta  n-i n \epsilon  \sin (\theta ))\\
+e_2=-\exp(+i M n+i \theta  n-i n \epsilon  \sin (\theta ))\\
+e_3=+\exp(-i M n-i \theta  n+i n \epsilon  \sin (\theta ))\\
+e_4=-\exp(+i M n-i \theta  n+i n \epsilon  \sin (\theta ))\\
+\end{cases}$$
+
+可以发现其实都是 $e^{n\alpha}$的结构.
+
+我们引入多对数函数: 
+
+$$\mathrm{Li}_s(z) := z\Phi (z,s,1)=\sum _{n=1}^{\infty } \frac{z^n}{n^s}$$
+
+也就是说:
+
+$$\sum _{n=1}^{\infty } \frac{e^{a n}}{n}=\text{Li}_1\left(e^a\right)=i\arg (1-e^a)-\ln |1-e^a|$$
+
+用这个函数化简等式:
+
+$$\begin{aligned}
+E=&M+\frac{2}{\pi}\int_0^\pi\left[\sum _{n=1}^{\infty } \frac{i}{4 n}\left(e_1+e_2+e_3+e_4\right)\right]\,\mathrm{d}θ\\
+=&M+\frac{i}{2\pi}\int_0^\pi\left[\text{Li}_1(e^{a_1})+\text{Li}_1(e^{a_2})+\text{Li}_1(e^{a_3})+\text{Li}_1(e^{a_4})\right]\,\mathrm{d}θ
+\end{aligned}$$
+
+同样的整理一下:
+
+$$\begin{cases}
+a_1=+i (\theta -M-\epsilon  \sin (\theta ))\\
+a_2=+i (\theta +M-\epsilon  \sin (\theta ))\\
+a_3=-i (\theta +M-\epsilon  \sin (\theta ))\\
+a_4=-i (\theta -M-\epsilon  \sin (\theta ))\\
+\end{cases}$$
+
+可以合并成两组, 然后再次展开, 运算量有点大.
+
+化简的时候注意恒等式: $\arg(e^{ix})=\arctan(\tan (x))$.
+
+$$\begin{aligned}
+\sum \text{Li}_1(e^{a})
+=&\frac{2}{i}\arctan\tan \left(\frac{\theta -M-\epsilon  \sin (\theta )+\pi}{2} \right)\\
++&\frac{2}{i}\arctan\tan \left(\frac{-\theta -M+\epsilon  \sin (\theta )+\pi}{2}\right)
+\end{aligned}$$
+
+注意到第二部分:
+
+$$\int_0^{\pi } \arctan\cot \left(\frac{1}{2} (\theta +M-\epsilon  \sin (\theta ))\right) \, \mathrm{d}\theta =\epsilon+\frac{1}{4} \left( +\pi ^2-2 \pi  M\right)$$
+
+最后代回去大功告成!
+
+$$\begin{aligned}
+\bigstar E=&M+\frac{i}{2\pi}\int_0^\pi\sum \text{Li}_1(e^{a})\,\mathrm{d}θ\\
+=&\frac{1}{4} (2 M+\pi )+\frac{\epsilon }{\pi }+\frac{1}{\pi }\int_0^\pi\arctan\tan \left(\frac{\theta -M-\epsilon  \sin (\theta )+\pi}{2} \right)\mathrm{d}\theta
+\end{aligned}$$
+
+代入数据就得到了 Stack Exchange 一样的结果.
+
+---
+
+我对 $\arctan(\tan (x))$ 这种写法感到很不爽.
+
+这个当然不能直接抵消, 由于$\arctan(\tan (x)) \neq x$, 我们作复展开.
+
+$$\begin{aligned}
+\arctan(\tan (x))
+&=\frac{1}{2} i \log \left(1+\frac{e^{-i x}-e^{i x}}{e^{-i x}+e^{i x}}\right)-\frac{1}{2} i \log \left(1-\frac{e^{-i x}-e^{i x}}{e^{-i x}+e^{i x}}\right)\\
+&=\frac{i}{2}\log \left(\frac{2}{1+e^{2 i x}}\biggl/\frac{2 e^{2 i x}}{1+e^{2 i x}}\right)\\
+&=\frac{i}{2}\log (e^{-2 i x})
+\end{aligned}$$
+
+严格来说这两者不是完全相等的, 因为这样一来消掉了奇点.
+
+不过积分的时候完全可以划等号, 因为区间开闭完全不影响积分值.
+
+$$\bigstar E=\frac{1}{4} (2 M+\pi )+\frac{\epsilon }{\pi }+\frac{i}{2\pi }\int_0^\pi
+\log \left(-e^{i (M+\epsilon  \sin\theta-\theta)}\right)\mathrm{d}\theta$$
+
+
+综上所述, 最后代入值, 我们得到了:
+
+$$\begin{aligned}
+\mathcal{D}_{\;}=&\frac{1}{\pi }\left[1+\frac{i}{2}\int_0^{\pi}\log \left(-i e^{i (\sin t-t)}\right)\;\mathrm{d}t\right]\\
+\mathcal{D}_°=&\frac{1}{\pi }\left[1+\frac{90i}{\pi}\int_0^{\pi}\log \left(-i e^{i (\pi\sin t/180-t)}\right)\;\mathrm{d}t\right]
+\end{aligned}$$
+
+```mma
+(*真男人从不回头看数值验证*)
+(2 + I Integrate[Log[-I/E^(I*(t - Sin[t]))], {t, 0, Pi}])/(2*Pi)//N
+(Pi + 90I Integrate[Log[(-I)*E^((-I)*t + (1/180)*I*Pi*Sin[t])], {t, 0, Pi}])/Pi^2//N
+
+> 0.7390851332151609` 
+> 0.9998477415310951` 
+```
+
+#### 只有娘们才喜欢用特殊函数
+
+最后一个是[百度贴吧][http://tieba.baidu.com/p/2377446051?pid=33709672129&cid=0#33709672129]上的, 这个答案就非常魔幻了,它和上面两个方法不是一个系列的, 和第一个方法有关.
+
+暴力求解拉格朗日反演的解析形式, 场面非常的少儿不宜...
+
+我一时半会儿也没看懂,详情看参考书目(3).
+
+$$\begin{aligned}
+\mathcal{D}=&\frac{1}{2} \pi  \exp \left(\int_0^1 {\frac{1}{\pi  x}\arctan\left(\frac{x \log \left(\frac{\sqrt{1-x^2}+1}{x}\right)(\pi  x+2) }{x^2 \log ^2\left(\frac{\sqrt{1-x^2}+1}{x}\right)-\pi  x-1}\right) \, \mathrm{d}x}\right)\\
+=&\mathrm{arccot}\left(1+\frac{1}{2 \pi }\int_0^1{ \log \left(\frac{\pi ^2 \left(1-x^2\right)+4 \left(\sqrt{1-x^2} \mathrm{arctanh}(x)+x\right)^2}{\pi ^2 \left(1-x^2\right)+4 \left(\sqrt{1-x^2} \mathrm{arctanh}(x)-x\right)^2}\right) \, \mathrm{d}x}\right)
+\end{aligned}$$
+
+从这个结果上也能看出这个方法有多残暴...
+
+```mma
+(*怎么可以这么暴力的说*)
+\[Pi]/2 Exp[NIntegrate[1/(\[Pi] x) ArcTan[((\[Pi] x+2)Log[(Sqrt[1-x^2]+1)/x]x)/(x^2Log[(Sqrt[1-x^2]+1)/x]^2-\[Pi] x-1)],{x,0,1},WorkingPrecision->50]]
+ArcCot[1+1/(2\[Pi] ) NIntegrate[Log[((1-x^2)Pi^2+4(Sqrt[1-x^2]ArcTanh[x]+x)^2)/((1-x^2)Pi^2+4(Sqrt[1-x^2]ArcTanh[x]-x)^2)],{x,0,1},WorkingPrecision->50]]
+
+> 0.73908513321516064165531208767387340401341175890075746496567242428255184768807`50.12267193056545
+> 0.73908513321516064165531208767387340401341175890075746496567993239614795659229`51.22422170141253
+```
+
+### 参考书目
+
+ 1. On Taylor series and Kapteyn series of the first and second type
+ 2. Kepler's equation, radiation problems and Meissel's expansion
+ 3. An exact analytical solution of Kepler's Equation
