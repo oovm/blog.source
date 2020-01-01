@@ -1,3 +1,4 @@
+# IDE
 *.iml
 .idea/
 .vscode/
@@ -8,7 +9,13 @@
 *.jpeg
 
 # 数据
-*.xlsx
+fmt.*
 
 # 笔记本
 *.nb
+
+
+# node
+node_modules/
+yarn.lock
+yarn-error.log

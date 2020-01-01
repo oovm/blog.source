@@ -1,5 +1,8 @@
-
-
+\title: Windows 全深度学习环境安装
+\path: Completed Deep Learning Environment for Windows
+\date: 2019-3-7 12:41:05
+\tags: windows, torch, tensorflow, mxnet
+\cats: Deep Learning
 
 下载地址: `https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/`
 
@@ -33,7 +36,7 @@ conda config --remove channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkg
 
 ```bash
 conda install tensorflow keras caffe-cpu pytorch-cpu -y
-pip install mxnet 
+pip install mxnet
 ```
 
 千万不要加 `-c` 除非你住在墙外.
