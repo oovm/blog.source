@@ -26,7 +26,7 @@ echo "Ctrl + C 退出" && sleep 86400
 
 双击运行即可, 若跳警告, 统统无视即可
 
-<!-- more -->
+\more
 
 Win 不手操 `%Path%` 是没有 `pip` 的, 只有 `python -m pip` , 当初我学 python 被这个坑死了...
 
@@ -38,7 +38,7 @@ py=StartExternalSession["Python"]
 js=StartExternalSession["NodeJS"]
 ```
 
-![](https://i.loli.net/2018/02/23/5a8f7fb96e9ea.png)
+\image: https://i.loli.net/2018/02/23/5a8f7fb96e9ea.png
 
 ### Linux 用户
 
@@ -61,7 +61,7 @@ Bash[command_String]:=RunProcess[{
 Bash["bash --version | head -1 | tr -d '\n'"]
 ```
 
-![](https://i.loli.net/2018/02/23/5a8f7fba3f404.png)
+\image: https://i.loli.net/2018/02/23/5a8f7fba3f404.png
 
 就是怎么想怎么蛋疼, 我为什么要在 Mathematica 里用bash...
 
@@ -69,13 +69,13 @@ Bash["bash --version | head -1 | tr -d '\n'"]
 
 装个 `numpy` 用用先
 
-![](https://i.loli.net/2018/02/23/5a8f94da4d2b8.png)
+\image: https://i.loli.net/2018/02/23/5a8f94da4d2b8.png
 
 可以看到下面的建议栏跳出来了, 说明数据类型已经自动转化为 Mathematica 支持的类型了, 上面的列表的写法也是Mathematica的列表写法.
 
 试了下图片和函数都不能导出...那有什么意思啊...
 
-![](https://i.loli.net/2018/02/23/5a8f94da4261f.png)
+\image: https://i.loli.net/2018/02/23/5a8f94da4261f.png
 
 有意思, Association 的原型果然是这个, 格式化用的是 Mathematica 的格式化, 因为按照浮点运算
 
@@ -98,10 +98,10 @@ Bash["bash --version | head -1 | tr -d '\n'"]
 
 Notebook 左边这个小加号是能扩展的, 未来加个 Python 语言输入, Julia 语言输入也不是不可以啊...
 
-![](https://i.loli.net/2018/02/23/5a8f94da42687.png)
+\image: https://i.loli.net/2018/02/23/5a8f94da42687.png
 
 ---
 
-Update
+Update 2018-09-10
 
 一语成谶了啊, Mathematica 真的加入了 Python Cell 和 JavaScript Cell!

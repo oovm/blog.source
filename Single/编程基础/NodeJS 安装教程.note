@@ -1,0 +1,10 @@
+\title: NodeJS 安装教程
+\path: NodeJS Installation Tutorial
+\date: 2018-02-23 18:13:31
+\tags: javascript, nodejs
+\categories: Tutorial
+
+```sh
+npm config set registry https://registry.npm.taobao.org --global 
+npm config set disturl https://npm.taobao.org/dist --global
+```

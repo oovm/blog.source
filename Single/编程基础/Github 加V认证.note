@@ -1,6 +1,7 @@
 \title: Gayhub 加V认证
-date: 2017-11-11
-tags: github
+\path: Gayhub VIP certification
+\date: 2017-11-11
+\tags: github
 \categories: Tutorial
 
 
@@ -8,9 +9,7 @@ tags: github
 
 大V当然要有独特的标记, Gayhub的标记是什么样的呢?
 
-![](https://i.loli.net/2018/03/07/5a9fab23d67a8.png)
-
-<!--more-->
+\image: https://i.loli.net/2018/03/07/5a9fab23d67a8.png
 
 ## Warning!!!
 
@@ -23,6 +22,8 @@ tags: github
 Rebase 之后还丢失认证, 除非使用专用的变基技巧...
 
 如果你确定你不怕麻烦就是要加V的话那我们开始吧!
+
+\more
 
 ### 应用场景
 
@@ -171,13 +172,13 @@ git config --global gpg.program "C:\\Program Files (x86)\\GnuPG\\bin\\gpg.exe"
 
 如果你还是有问题, 那么可以手动更改全局设定
 
-![](https://i.loli.net/2018/03/07/5a9fae742cce1.png)
+\image: https://i.loli.net/2018/03/07/5a9fae742cce1.png
 
 ### Linux 用户
 
 虽然 Linux 动手能力很强, 但是这个还是不太好找的
 
-解决方案: [Jetbrains: GPG in Linux](https://youtrack.jetbrains.com/oauth?state=%2Fissue%2FIDEA-127802)
+解决方案: \link[https://youtrack.jetbrains.com/oauth?state=%2Fissue%2FIDEA-127802][Jetbrains: GPG in Linux]
 
 `git config --global gpg.program /usr/local/bin/gpg`
 
@@ -192,7 +193,7 @@ git config --global gpg.program "C:\\Program Files (x86)\\GnuPG\\bin\\gpg.exe"
 
 本来对 Mac 用户要收费的, 但我干掉了这个难题心情不错, 附赠的...
 
-解决方案: [Stackoverflow: GPG on Mac](https://stackoverflow.com/questions/39494631/gpg-failed-to-sign-the-data-fatal-failed-to-write-commit-object-git-2-10-0)
+解决方案: \link[https://stackoverflow.com/questions/39494631/gpg-failed-to-sign-the-data-fatal-failed-to-write-commit-object-git-2-10-0][Stackoverflow: GPG on Mac]
 
 ```sh
 brew install pinentry-mac
