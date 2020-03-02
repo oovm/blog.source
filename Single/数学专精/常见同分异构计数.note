@@ -1,0 +1,161 @@
+\title: 常见同分异构体计数
+\path: Common Isomers Count
+\date: 2018-03-04 15:02:40
+\cats: Chemistry, Combinatorics
+
+# 引言
+
+# 计算
+
+## 烷基自由基计数
+
+我们从卤代烃$C_nH_{2n+1}X$开始, X是卤素, 当然也可以是别的取代基.
+
+### Planarisomers
+
+设 Free radicals count ,$\mathtt{Fr}(x)$
+
+三个取代基的置换群若不考虑手性为 S_3 ;若考虑手性为 A_3 \cong \mathbb{Z}_3
+
+$$\mathbb{Z}(\mathcal{S}_3)=\frac 16 (2s_3+3s_2s_1+s_1^3)$$
+
+补上剩下的一个碳
+
+$$\begin{aligned}
+A(x)&=1+x\mathbb{Z}[\mathcal{S}_3,A(x)]\\
+&=1+\dfrac{x}{6}[A^3(x)+3A(x)A(x^2)+2A(x^3)]
+\end{aligned}$$
+
+当然这个函数方程怎么展开是个大问题, 我们可以使用附录中级数的复合与反演来解决.
+
+```mma
+A[z_]:=Evaluate@Normal@Fold[
+    Series[1+z/6(#^3+3# ComposeSeries[#,z^2+O[z]^#2]+2 ComposeSeries[#,z^3+O[z]^#2]),{z,0,#2}]&,
+    1+O[z],Range@Floor@n
+];
+```
+
+### Stereoisomers
+
+三个取代基的置换群若考虑手性为循环群 $\mathcal{C}_3$
+
+$$\mathbb{Z}(\mathcal{C}_3)=\frac13(s_1^3+2 s_3)$$
+
+```mma
+A[z_]:=Evaluate@Normal@Fold[
+    Series[1+z/3(#^3+2 ComposeSeries[#,z^3+O[z]^#2]),{z,0,#2}]&,
+    1+O[z],Range@Floor[n/2]
+];
+```
+
+## 烷烃计数
+
+接下来考虑从烷基自由基组合生成烷烃 $C_nH_{2n+2}$
+
+$$p^*-q^*+s=1$$
+
+点的等价类数-边的等价类数+对称边数=1
+
+碳的不同标记方法数-键的不同标记方法数+对称键数=1
+
+let Alkane Count,$\mathtt{Ac}$
+
+\mathtt{Ac}(z)=P(z)-Q(z)+S(z)
+
+### Planarisomers
+
+
+
+$$\begin{aligned}
+P(x)&=x\mathbb{Z}[\mathcal{S}_4,A(x)]\\
+&=\frac{1}{24}x(A^4(x)+6A^2(x)A(x^2)+3A^2(x^2)+8A(x)A(x^3)+6A(x^4))\\
+Q(x)&=\mathbb{Z}[\mathcal{S}_2,A(x)-1]\\
+&=\frac 12((A(x)-1)^2+A(x^2)-1)\\
+S(x)&=A(z^2)-1
+\end{aligned}$$
+
+```mma
+AlkaneSeries[n_Integer]:=Block[
+    {A,P,Q,S,G},
+    A[z_]:=Evaluate@Normal@Fold[
+        Series[1+z/6(#^3+3# ComposeSeries[#,z^2+O[z]^#2]+2 ComposeSeries[#,z^3+O[z]^#2]),{z,0,#2}]&,
+        1+O[z],Range@Floor[n/2]
+    ];
+    P[z_]=z CycleIndexPolynomial[SymmetricGroup[4],Array[A[z^#]&,4]];
+    Q[z_]=CycleIndexPolynomial[SymmetricGroup[2],Array[A[z^#]-1&,2]];
+    S[z_]=A[z^2];
+    Series[P[z]-Q[z]+S[z]-1,{z,0,n}]
+];
+```
+
+
+
+### Stereoisomers
+
+同样的 $p^*$ 由对称群$\mathcal{S}_4$ 变为交错群$\mathcal{A}_4$.
+
+$$\mathbb{Z}(\mathcal{A}_4)=\frac{1}{12}(s_1^4+8 s_3 s_1+3 s_2^2)$$
+
+$$Q(x)=\mathbb{Z}[\mathcal{A}_4,A(x)]=\frac{1}{12}\left(8 A\left(z^3\right) A(z)+3 A\left(z^2\right)^2+A(z)^4\right)$$
+
+```mma
+AlkaneSeries[n_Integer]:=Block[
+    {A,P,Q,S,G},
+    A[z_]:=Evaluate@Normal@Fold[
+        Series[1+z/3(#^3+2 ComposeSeries[#,z^3+O[z]^#2]),{z,0,#2}]&,
+        1+O[z],Range@Floor[n/2]
+    ];
+    P[z_]=z CycleIndexPolynomial[AlternatingGroup[4],Array[A[z^#]&,4]];
+    Q[z_]=CycleIndexPolynomial[SymmetricGroup[2],Array[A[z^#]-1&,2]];
+    S[z_]=A[z^2];
+    Series[P[z]-Q[z]+S[z]-1,{z,0,n}]
+];
+```
+
+
+## 苯环
+
+```
+pg = GroupDirectProduct[AlternatingGroup@5, CyclicGroup@2];
+A[z_, i_] := Evaluate[#^i & /@ (1 + a + b + c + d)]
+CycleIndexPolynomial[pg, Array[A[z, #] &, 60]];
+Coefficient[%, a b c d]
+```
+
+# 附录
+
+### 旋转群与指标多项式
+
+S,C,A,D
+
+
+### 级数复合与反演
+
+拉格朗日反演, 比起比较两边系数高到不知道哪里去了.
+
+### 群直积与积群
+
+```mma
+GroupDirectProduct[g1_,g2_]:=With[
+    {order1=GroupOrder@g1,order2=GroupOrder@g2,r,pd},
+    r=Thread[Range[order2]->(order1+Range[order2])];
+    pd=Outer[PermutationProduct,GroupElements[g1],GroupElements[g2]/.r];
+    PermutationGroup@Flatten@pd
+]
+```
+
+我刚开始以为Mathematica没有计算群直积的函数, 然后写了个`GroupDirectProduct`.
+
+后来才发现确实没有这个函数, 因为群直积居然划分在群属性里.
+
+```mma
+GroupDirectProduct[AlternatingGroup@5,CyclicGroup@2]
+FiniteGroupData[{"DirectProduct",
+    {
+        {"AlternatingGroup",5},
+        {"CyclicGroup",2}
+    }
+},"PermutationGroupRepresentation"]
+```
+
+
