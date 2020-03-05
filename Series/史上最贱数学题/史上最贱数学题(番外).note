@@ -1,0 +1,93 @@
+\title: 史上最贱数学题(番外)
+\path: The cheapest math problem in history 2
+\date: 2017-09-16 15:17:42
+\tags: insane problems
+\categories: Math, Number Theory
+
+这个题其实相当显然, 因为:
+
+$$\begin{aligned}
+f=&\frac{a}{b+c}+\frac{b}{a+c}+\frac{c}{a+b} \\
+=&\frac{3}{2} + \frac{1}{2} \left(\frac{(a-b)^2}{(a+c)(b+c)}+\frac{(a-c)^2}{(a+b)(b+c)}+\frac{(b-c)^2}{(a+b)(a+c)}\right)\\
+\geq &\frac32\qquad \mathtt{quiet\ easily\ done!}
+\end{aligned}$$
+
+角豆麻袋, 什么情况, 不要使用禁咒 $\cdot$ 陈计配凑, 好吗!
+
+你能不能按照**高考考纲**以及**高考给分要求**来啊?
+
+说的是呢, 其实也不是很难, 换个元更清晰.
+
+解: 设 $a+b:=x,b+c:=y,c+a:=z$.
+
+$$\begin{aligned}
+2f=&2 \left(\dfrac{a}{b+c}+\dfrac{b}{c+a}+\dfrac{c}{a+b}\right)\\
+=&\dfrac{a+a}{y}+\dfrac{b+b}{z}+\dfrac{c+c}{x}\\
+=&\dfrac{z-c+x-b}{y}+\dfrac{x-a+y-c}{z}+\dfrac{y-b+z-a}{x}\\
+=&\dfrac{z+x-y}{y}+\dfrac{x+y-z}{z}+\dfrac{y+z-x}{x}\\
+=&\underbrace{\dfrac{x}{y}+\dfrac{y}{x}}_{\geq 2}+\underbrace{\dfrac{y}{z}+\dfrac{z}{y}}_{\geq 2}+\underbrace{\dfrac{z}{x}+\dfrac{x}{z}}_{\geq 2}-3 \\
+\geq &3 \qquad\mathtt{Q.E.D}
+\end{aligned}$$
+
+答: 由是观之, $\dfrac{a}{b+c}+\dfrac{b}{c+a}+\dfrac{c}{a+b}\geq \dfrac32$.
+
+很自然的想到, 是不是能有:
+
+$$\sum_{i=1}^{n} \frac{x_i}{x_{i+1}+x_{i+2}} \geq \frac{n}{2}$$
+
+n=3是个很有名的情形, Nesbitt's_inequality,有十几种证明, $n=4$ 还可以通过观察法凑配, $n=5,6$要借助凸性构造Jensen不等式, 接下来难度开始爆炸, 各种玄妙的操作...
+
+最后.......
+
+---
+
+很不幸, 这不是恒成立的, 当n=14时崩坏了...
+
+Troesch 给出了一个反例:
+
+$$x_{14}=(0,42,2,42,4,41,5,39,4,38,2,38,0,40)$$
+
+$$\sum_{cyc}^{x_{14}}\frac{x_i}{x_{i+1}+x_{i+2}}=\frac{202566829}{28938140}\approx6.999999<\frac{14}{2}$$
+
+```mathematica
+var={0,42,2,42,4,41,5,39,4,38,2,38,0,40};
+#1/(#2+#3)&@@@Partition[var,3,1,1]//Total
+```
+
+哇, 有毒啊, 构造大丈夫....
+事实上这个不等式只对 $n=3\sim14,15,17,19,21,23$ 成立.
+
+ Shapiro inequality is an inequality proposed by H. Shapiro in 1954.
+ 
+借助一些分析学手段发现可以打个补丁修正这个不等式:
+
+$$\sum_{i=1}^{n} \frac{x_i}{x_{i+1}+x_{i+2}} \geq \frac{\gamma}{2}n$$
+ 
+$\gamma$ 是 $y_1(x)=e^{-x}$ 与 $y_2(x)=\dfrac{2}{e^{x/2}+e^x}$ 的函数凸包的根...
+
+>**FunctionConvexHull**
+>The convex hull of two or more functions is the largest function that is concave from above and does not exceed the given functions.
+
+我也不知道函数凸包是什么鬼, 描述和下面的计算完全对不上......
+
+具体来说就是下列方程的实根:
+
+$$x+\frac{1}{2 e^{x/2}+1}=\log \left(\frac{4 e^x}{2 e^{x/2}+1}\cosh ^2\left(\frac{x}{4}\right)\right)$$
+
+就一个, 代入下面这个式子里...
+
+$$\gamma=\frac{1}{4} \left(2 e^{-\frac{x}{2}} (x+1)+e^{-x} (x+2)\right) \text{sech}^2\left(\frac{x}{4}\right)$$
+
+```mathematica
+eq=1/(1 + 2*E^(x/2)) + x == Log[(4*E^x*Cosh[x/4]^2)/(1 + 2*E^(x/2))];
+r=FindRoot[eq, {x, -1},WorkingPrecision->50]; 
+(1/4)*Sech[x/4]^2*((2 + x)/E^x + (2*(1 + x))/E^(x/2)) /.r
+
+>>0.98913363444699305224349030826633798138034809804418
+```
+
+
+http://www.turgor.ru/lktg/2010/5/5-1en.pdf
+https://en.wikipedia.org/wiki/Shapiro_inequality
+http://mathworld.wolfram.com/ShapirosCyclicSumConstant.html
+https://en.wikipedia.org/wiki/Nesbitt%27s_inequality
