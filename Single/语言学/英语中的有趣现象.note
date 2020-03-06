@@ -1,0 +1,47 @@
+\title: 英语中的有趣现象
+\path: Interesting phenomenas in english
+\date: 2019-10-19 09:21:20
+\tags: english, mathematica
+\cats: Linguistics
+
+
+
+### 有哪些英语单词倒过来是另一个单词？
+
+```wl
+DictionaryLookup[x__ /; DictionaryWordQ@StringReverse@x]
+```
+
+
+### 有哪些英语单词是回文的？
+
+```wl
+DictionaryLookup[x__ /; x === StringReverse@x]
+```
+
+有个慢一点的方法, 但是可以短一点
+
+```wl
+DictionaryLookup[x__ /; PalindromeQ@x]
+```
+
+
+### 哪两个字母不可能连在一起？
+
+https://www.zhihu.com/question/25908268
+
+
+### 英文各字母使用频率？
+
+https://www.zhihu.com/question/23111432
+
+
+
+
+### 英语单词 26 个首字母出现概率各是多少？
+
+https://www.zhihu.com/question/30077599
+
+## 英语单词哪个字母出现频率最高?
+
+https://www.zhihu.com/question/19805834/answer/67555450
