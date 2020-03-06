@@ -22,7 +22,7 @@ conda create -n py2 python=2.7
 conda create -n py3 python=3.6
 ```
 
-接下来就没bash什么事了, 切换到新搞的python3环境, 然后我看看, jupyterlab,spyder和vscode走起,其他不要了.
+接下来就没 bash 什么事了, 切换到新搞的 python3 环境, 然后我看看, jupyterlab, spyder 和 vscode 走起, 其他不要了.
 
 打开 spyder 开干!
 
