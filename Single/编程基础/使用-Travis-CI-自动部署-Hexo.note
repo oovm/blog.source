@@ -1,0 +1,20 @@
+\title: 使用 Travis CI 自动部署 Hexo
+\date: 2018-03-12 21:21:20
+\tags: hexo, ci
+
+
+```
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@         WARNING: UNPROTECTED PRIVATE KEY FILE!          @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Permissions 0644 for '/home/travis/.ssh/git_rsa' are too open.
+It is required that your private key files are NOT accessible by others.
+This private key will be ignored.
+bad permissions: ignore key: /home/travis/.ssh/git_rsa
+Permission denied (publickey).
+fatal: Could not read from remote repository.
+```
+
+
+sudo apt install ruby ruby-dev
+sudo gem install travis

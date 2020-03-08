@@ -1,0 +1,429 @@
+\title: Mathematica匿名函数高级应用
+\date: 2019-04-13 17:13:32
+**Is there any way to define pure functions with optional arguments?**
+
+For example consider the following function:
+
+    Function[{u,v},u^2+v^4]
+
+Is there anyway to define default values for the variables `u` and `v`?
+
+I know that this is possible for ordinary functions as follows:
+
+    f[u_:1,v_:0]:=u^2+v^4
+
+But I am looking for a way to do this with pure functions defined by `Function[]`.
+
+
+====================
+
+As far as I know there is no way to do this with the named parameter form of `Function` but you can use [destructuring][1] methods with `SlotSequence` (`##`):
+
+    f = {##} /. {u_: 1, v_: 0} :> body[u, v] &;
+    
+    f[]
+    f[7]
+    f[7, 8]
+
+>     body[1, 0]
+>     
+>     body[7, 0]
+>     
+>     body[7, 8]
+
+It is possible to give your pure function [`Attributes`](http://reference.wolfram.com/mathematica/ref/Attributes.html) using an [undocumented form][2].  
+For Hold attributes you could use `Hold` or `HoldComplete`:
+
+    g = Function[Null, Hold[##] /. _[u_: 1, v_: 0] :> HoldForm[{u, v}], HoldAll];
+    
+    g[1 + 1]
+
+>     {1 + 1, 0}
+
+
+
+  [1]: https://mathematica.stackexchange.com/a/8399/121
+  [2]: https://mathematica.stackexchange.com/q/29168/121
+
+
+==================
+
+
+In this answer, I focus on the case of pure functions with one or more `Slot` in their body, which is different than the other answers. 
+
+First I present the function `optionalFu` which works just like `Function`, but which turns of a message. This message is the one that is generated when not all slots can be filled from the given input, like in `{#,#2}&[5]`. It is interesting to interpret this message as a warning, rather than an error and to ignore it, because _Mathematica_ still fills all the slots it can. So `{#,#2}&[5]` evaluates to `{5,#2}` and it remains to be seen what to do with `#2`. The second function in this answer, `optFuWithDefaults`, replaces such slots (`#2`) with default values.
+
+Be warned that the code  for `optionalFu` and `optFuWithDefaults` are both very unreadable, but they appear to work nicely and it definitely more informative to read the examples below than the code.
+
+    optionalFu =
+     Function[Null,
+      ReplacePart[
+       Function @@ Hold[
+         Null,
+         Quiet[## &, {Function::slotn}],
+         HoldAll
+         ]
+       ,
+       {2, 1, 0} -> Function @@ Hold[##]
+       ], HoldAll]
+
+    optFuWithDefaults = 
+     Function[{functionBody, slotDefaultRules, nSlots},
+      Module[
+       {fuToken, argsHeld},
+       argsHeld = Hold @@ Slot /@ Range[nSlots] /. slotDefaultRules;
+       ReplaceAll[
+        Function[Null,
+         (Function @@ {
+             Null,
+             fuToken[##],
+             HoldAll
+             }) @@ argsHeld, HoldAll]
+        ,
+        Join[
+         {fuToken -> optionalFu @@ Hold @@ Unevaluated@functionBody},
+         OwnValues@argsHeld
+         ]
+        ]
+       ], HoldAll]
+
+There are three arguments in this last function: `{functionBody, slotDefaultRules, nSlots}`. 
+
+`functionBody` is really a list (or you can use any head) of arguments that you would normally pass to `Function`. So if we set `functionBody -> {{#, #2}}` then this corresponds to `{#, #2}&`, while `functionBody -> {Null, {#, Hold[#2]}, HoldAll}` corresponds to `Function[Null,{#, Hold[#2]}, HoldAll]`.
+
+`slotDefaultRules` is a list of rules that sets default values for slots, if they are not present. 
+
+`nSlots` is the number of slots that are present in `functionBody`. I have chosen not to infer this from `functionBody`, because there may be functions inside `functionBody` and I don't want to mess with those. Instead, the user has to specify `nSlots`. 
+
+Simple example
+
+    fu1 = optFuWithDefaults[{{#, #2}}, {#2 -> 3}, 2];
+    fu1[1]
+    fu1[1, 2]
+
+>  
+    {1,3}
+    {1,2}
+
+To quite some extent, functions in the `functionBody` argument are preserved.
+
+    fu2 = optFuWithDefaults[{{#,#2, {#,#2+5}&[#2,5]}}, {#2-> 3},2];
+    fu2[1]
+    fu2[1,2]
+
+>  
+    {1,3,{3,10}}
+    {1,2,{2,10}}
+
+It also works with `HoldAll` and `RuleDelayed`
+
+    fu3 = optFuWithDefaults[
+             {Null, {#, Hold[#2]}, HoldAll}, 
+             {#2 :> Print[hello]}, 2];
+    fu3[1]
+    fu3[1, Print[goodbye]]
+>  
+    {1,Hold[Print[hello]]}
+    {1,Hold[Print[goodbye]]}
+
+When using `Rule` and when not using `HoldAll`, arguments are also evaluated at appropriate times
+
+    fu4 = optFuWithDefaults[{{#, Hold[#2]}}, {#2 -> 2 + 2}, 2];
+    fu4[1]
+    fu4[1, 5 + 4]
+>  
+    {1,Hold[4]}
+    {1,Hold[9]}
+
+As mentioned, you can use any head in the first argument (`functionBody`). This means you can also use `Function` and get a bit of syntax highlighting (but only in the first argument)
+
+    fu5 = optFuWithDefaults[
+       {#, #2} &, {#2 -> 3}, 2];
+    fu5[1]
+    fu5[1, 2]
+
+
+---
+
+**Is it possible to reference “self” from a pure function?**
+
+This would calculate the factorial of 6, if the "self" was the function itself. Is there something that could allow this?
+
+    If[#[[1]] > 0, self[{#[[1]] - 1, #[[2]] #[[1]]}], Print[#[[2]]]] &[{6, 1}]
+
+There is also this function syntax:
+
+    Function[x, x If[x > 2, self[x - 1], 1]]
+which can also be written using this shorthand syntax:
+
+    x \[Function] x If[x > 2, self[x - 1], 1]
+
+=======================
+
+Per suggestion of [rcollyer][1], I have moved [this answer][2] here, with a few modifications / additions.
+
+
+----------
+
+
+Recursive pure functions (`#0`) seem to be one of the darker corners of the language. They are mentioned [in the documentation of `Slot`][3]. Here I will review the simple uses, and also show a couple of non-trivial examples of their use , where this is really useful (not that they can not be done without this construct). 
+
+###Simple uses
+
+Here is an example of the factorial, taken from the docs:
+
+    factRP = If[#1 == 1, 1, #1 #0[#1 - 1]] &;
+
+    factRP /@ Range[5]
+
+    (* {1, 2, 6, 24, 120} *)
+
+Here is an example of Fibonacci numbers:
+
+    fibRP = If[# == 0 || # == 1, 1, #0[# - 1] + #0[# - 2]] &
+
+    fibRP /@ Range[10]
+
+    (* {1,2,3,5,8,13,21,34,55,89} *)
+
+Obviously, this simple version suffers from the standard issue of overlapping sub-problems and exponential complexity, known for this implementation. We will see how to avoid this via memoization below, in this setting.
+
+###A few advanced examples
+
+***MapAll***
+
+Here is a simple implementation of `MapAll`, using only pure functions and usual `Map`:
+
+    mapAll = With[{fn = #}, If[AtomQ[#], fn[#], fn  @ Map[#0, #]] &[#2]] &;
+
+For example:
+
+    mapAll[ff, {{a, b}, q[{f, {g, h}}]}]
+
+    (* ff[{ff[{ff[a], ff[b]}], ff[q[ff[{ff[f], ff[{ff[g], ff[h]}]}]]]}] *)
+
+which is the same result that `MapAll` would yield.
+
+
+***Flatten***
+
+In a similar spirit, here is a simple implementation of `Flatten` (of a single argument), that uses recursive pure function:
+
+    flattenSimple = Head[#][If[ListQ[#], Sequence @@ Map[#0, #], #] &[#]] &
+
+For example:
+
+    flattenSimple @ {{a, b}, {c, {d}, e}, {f, {g, h}}}
+
+    (* {a, b, c, d, e, f, g, h} *)
+
+It doesn't go inside non-List heads, which is right:
+
+    flattenSimple@{{a, b}, {c, {d}, e}, q[{f, {g, h}}]}
+
+    (* {a, b, c, d, e, q[{f, {g, h}}]} *)
+
+One can implement a two-argument version of `Flatten` in a similar way, but it becomes somewhat more complex:
+
+    flattenCorePF = 
+      If[ListQ[#] && #2 > 0, 
+         With[{fn = #0, lev = #2 - 1}, Sequence @@ Map[fn[#, lev] &, #]],
+         #
+      ] &;
+
+    flattenPF = Head[#][flattenCorePF[#, If[Length[{##}] > 1, {##}[[2]] + 1, Infinity]]] &
+
+So that
+
+    flattenPF[{{a, b}, {c, {d}, e}, {f, {g, h}}}]
+
+    (* {a, b, c, d, e, f, g, h} *)
+
+    flattenPF[{{a, b}, {c, {d}, e}, {f, {g, h}}}, 1]
+
+    (* {a, b, c, {d}, e, f, {g, h}} *)
+
+    flattenPF[{{a, b}, {c, {d}, e}, {f, {g, h}}}, 2]
+
+    (* {a, b, c, d, e, f, g, h} *)
+
+    flattenPF[{{a, b}, {c, {d}, e}, q[{f, {g, h}}]}]
+
+    (* {a, b, c, d, e, q[{f, {g, h}}]} *)
+
+
+----------
+
+
+**Connected components in a graph**
+
+The following is a pretty concise and reasonably fast function to find connected components in a graph, given a list of edges specified as pairs of vertices:
+
+    ClearAll[setNew, componentsBFLS];
+    setNew[x_, x_] := Null;
+    setNew[lhs_, rhs_]:=lhs:=Function[Null, (#1 := #0[##]); #2, HoldFirst][lhs, rhs];
+
+    componentsBFLS[lst_List] := Module[{f}, setNew @@@ Map[f, lst, {2}];
+       GatherBy[Tally[Flatten@lst][[All, 1]], f]];
+
+What happens here is that we first map a dummy symbol on each of the vertex numbers, and then set up a way that, given a pair of vertices `{f[5],f[10]}`, say, then `f[5]` would evaluate to `f[10]`. The recursive pure function is used as a path compressor (to set up memoization in such a way that instead of long chains like `f[1]=f[3],f[3]=f[4],f[4]=f[2], ...`, memoized values get corrected whenever a new "root" of the component is discovered. This gives a significant speed-up. Because we use assignment, we need it to be HoldAll, which makes this construct even more obscure and more attractive ). This function is a result of on and off-line Mathgroup discussion involving Fred Simons, Szabolcs Horvat, DrMajorBob and yours truly. Example:
+
+    largeTest=RandomInteger[{1,80000},{40000,2}];
+
+    componentsBFLS[largeTest]//Short//Timing
+
+    (* {0.828,{{33686,62711,64315,11760,35384,45604,10212,52552,63986,  
+         <<8>>,40962,7294,63002,38018,46533,26503,43515,73143,5932},<<10522>>}} *)
+
+It is certainly much slower than a built-in, but for the size of code, quite fast still IMO. 
+
+
+----------
+
+***Recursive Select based on linked lists***
+
+Another example: here is a recursive realization of `Select`, based on [linked lists][4] and recursive pure functions:
+
+    selLLNaive[x_List, test_] :=
+      Flatten[If[TrueQ[test[#1]],
+         {#1, If[#2 === {}, {}, #0 @@ #2]},
+         If[#2 === {}, {}, #0 @@ #2]] & @@ Fold[{#2, #1} &, {}, Reverse[x]]];
+
+For example, 
+
+    Block[{$RecursionLimit= Infinity},
+        selLLNaive[Range[3000],EvenQ]
+    ]//Short//Timing
+
+    (* {0.047,{2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,
+     <<1470>>,2972,2974,2976,2978,2980,2982,2984,2986,2988,2990,
+      2992,2994,2996,2998,3000}} *)
+
+
+----------
+
+
+***Lightweight `Cases` and evaluation control***
+
+Here I will illustrate how one can control evaluation and avoid evaluation leaks, if recursive pure function is used as an expression traversal device. For this, I will consider a light-weight version of the `Cases` function, that would accept an expression and a pattern, and collect all pieces of expression matching the pattern, with the lev. spec `{0, Infinity}` and the `Heads` option set to `True`, while avoiding evaluation leaks.
+
+Here is a possible implementation
+
+    ClearAll[lightCases];
+    With[{u = Unevaluated},
+      lightCases[patt_] := 
+        If[# === {}, {}, First@#] & @ Last @ Reap[
+          Function[
+            Null
+            ,
+            If[ ! AtomQ[u @ #], Scan[#0, u @ #, Heads -> True]];
+            If[MatchQ[u @ #, patt], Sow[#]];
+            ,
+            HoldAllComplete
+          ] @ #
+        ] &
+    ]
+
+Here is an example use - find all symbols from which the function itself is built:
+
+    lightCases[_Symbol][lightCases[_Symbol]]
+
+    (* 
+       {Function, Function, If, SameQ, Slot, List, List, First, Slot,
+        Last, Reap, Function, Null, CompoundExpression, If, Not, AtomQ,
+        Unevaluated, Slot, Scan, Slot, Unevaluated, Slot, Rule, Heads, 
+        True, If, MatchQ, Unevaluated, Slot, Blank, Symbol, Sow, Slot, 
+        Null, HoldAllComplete, Slot}
+    *)
+
+which is the same list as would be returned by 
+
+    Cases[lightCases[_Symbol], _Symbol, {0, Infinity}, Heads -> True]
+
+This example illustrates how one can use recursive pure functions to create custom expression traversals and take care of evaluation control for traversed sub-expressions. In both cases of `lightCases` and built-in `Cases`, the inner parts of expression in question, which did not match the pattern, were kept unevaluated during the traversal of an expression. 
+   
+While in the above case, the built-in `Cases` can be used while being significantly faster, one can use a similar approach to construct completely arbitrary expression - traversing functions. And because these are pure functions, they don't need any explicit memory management (are automatically garbage - collectable), so can be freely passed anywhere - which would not be the case for functions based on `DownValues`. 
+
+So, this is another case where recursive pure functions may provide a feature that is hard to achieve via other mechanisms. 
+
+
+###Tail recursion
+
+The above example with recursive `Select` and linked lists is not properly tail - recursive, and will blow the stack (crash the kernel) for larger lists. This is a general problem, and the fact that one uses pure functions does not avoid that. OTOH, without making a function tail-recursive in the Mathematica sense, one can't use it reliably.
+
+The general problem of tail recursion and optimization of tail calls in the context of Mathematica has been discussed in a few places, e.g. [here][5] and [here][6]. Leaving the details to those, here is the tail-recursive version for the above example:
+
+    selLLTailRec[x_List, test_] :=
+      Flatten[
+        If[Last[#1] === {},
+          If[TrueQ[test[First[#1]]],
+            {#2, First[#1]}, #2],
+            (* else *)
+            #0[Last[#1], If[TrueQ[test[First[#1]]], {#2, First[#1]}, #2]
+        ]
+      ] &[Fold[{#2, #1} &, {}, Reverse[x]], {}]];
+
+For example, 
+
+    Block[{$IterationLimit= Infinity},
+           selLLTailRec[Range[500000],EvenQ]
+    ]//Short//Timing
+
+    (* {2.39,{2,4,6,8,10,12,14,16,18,20,22,
+           <<249978>>,499980,499982,499984,499986,499988,499990,499992,
+            499994,499996,499998,500000}} *)
+
+The reason that linked lists had to be used, is that standard Mathematica lists, being arrays, are not well-suited for recursion for performance reasons.
+
+###Memoization
+
+In a [recent post][7], I have shown how one can use memoization with pure functions. I will give here a constructor for such a function, and  explanations can be found in the mentioned post:
+
+    ClearAll[makeMemoPF];
+    SetAttributes[makeMemoPF, HoldFirst];
+    makeMemoPF[body_, start_: <||>] :=
+       Module[{fn = start},Function[If[KeyExistsQ[fn, #], fn[#], fn[#] = body]]]
+
+One thing to note here is that it involves a mutable state, relized as a `Module` - generated variable. For the case of Fibonacci numbers, it can be used as follows:
+
+    Map[makeMemoPF[#0[# - 1] + #0[# - 2], <|0 -> 1, 1 -> 1|>], Range[20]]
+
+    (* {1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765, 10946} *)
+
+As I mentioned in the post, one of the big advantages of such memoization scheme w.r.t. the standard idiom based on `DownValues` is the automatic garbage collection.
+
+###Limitations
+
+While interesting, the construct of recursive pure function has not been used extensively, AFAIK. I think, there are a few valid reasons for that, but many of them apply generally to recursive code in Mathematica. In particular:
+
+- Idiomatic Mathematica programming prefers `DownValue` - based functions for anything non-trivial. Pure functions are usually created at run-time and serve as a device to specialize generic higher-order functions to a particular task at hand.
+
+- Recursion is not widely used in Mathematica outside symbolic paradigm, where it is used mostly to write symbolic expression parsers, or economically overload functions to make them polymorphic and reusing some common code. 
+
+- It is hard to make recursive code fast, when it has to operate on large data. Core Mathematica data structures (normal expressions, lists) are based on arrays, and not well-suited for recursion. One can use linked lists, and that is heplful in many cases, but that flies in the face of vectorization - which is one of the main sources of optimizations in Mathematica, so we are left with the top-level code. Although, recursive solutions using linked lists / trees, often are among the fastest for the top-level code, and [sometimes][8] are very efficient.
+
+- Recursive pure functions can not be directly compiled, as far as I know. One can compile them in a way similar to what was shown in this example from the  [documentation][9] shows (section on `"InlineCompiledFunctions"` option):
+
+        cFact = Compile[{{x, _Integer}}, If[x == 1, 1, x*cFact[x - 1]],
+           {{_cFact, _Integer}}, 
+            CompilationOptions -> {"InlineExternalDefinitions" -> True}
+        ];
+
+    But it has nothing to do with pure functions proper.
+
+###Summary
+
+Recursive pure functions are an interesting and occasionally useful language feature. One has to worry about the tail calls, however, just as one would for recursive solutions based on `DownValues`. One can use recursive pure functions with memoization. The factors that limit the usefulness of this construct are mostly not specific to it, but apply to recursive code in Mathematica in general. 
+
+Despite this, there are cases, including rather non-trivial ones, where this construct can be quite useful. It is also quite possible that there are some novel and useful applications for this construct, which are not known yet (to me, at least), so it may be a good area for further explorations.
+
+
+  [1]: https://mathematica.stackexchange.com/users/52/rcollyer
+  [2]: https://stackoverflow.com/questions/4198961/what-is-in-your-mathematica-tool-bag/4923345#4923345
+  [3]: http://reference.wolfram.com/language/ref/Slot.html
+  [4]: https://mathematica.stackexchange.com/questions/24988/can-one-identify-the-design-patterns-of-mathematica/25474#25474
+  [5]: https://stackoverflow.com/questions/4481301/tail-call-optimization-in-mathematica/
+  [6]: https://mathematica.stackexchange.com/questions/21746/what-tools-can-help-in-realizing-tail-recursion
+  [7]: https://mathematica.stackexchange.com/a/85762/81
+  [8]: https://mathematica.stackexchange.com/questions/5387/how-can-i-use-mathematicas-graph-functions-to-cheat-at-boggle/5394#5394
+  [9]: http://reference.wolfram.com/language/Compile/tutorial/Operation.html#107986709
