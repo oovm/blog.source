@@ -1,4 +1,4 @@
-\date: 2019-10-6
+\title: TF 卷积的 pad 算法\date: 2019-10-6
 
 
 
@@ -64,4 +64,3 @@ pad_right = pad_needed_width \[Dash] pad_left
 \image: https://pic4.zhimg.com/v2-1e4dd2f22ad884ef8b142869dfe19d6b_b.jpg
 
 橙色部分为image, 蓝色部分为filter。full模式的意思是，**从filter和image刚相交开始做卷积，**白色部分为填0。filter的运动范围如图所示。
-

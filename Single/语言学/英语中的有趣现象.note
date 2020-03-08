@@ -4,14 +4,13 @@
 \tags: english, mathematica
 \cats: Linguistics
 
-
-
 ### 有哪些英语单词倒过来是另一个单词？
 
 ```wl
 DictionaryLookup[x__ /; DictionaryWordQ@StringReverse@x]
 ```
 
+蛮多的, 一共 614 个
 
 ### 有哪些英语单词是回文的？
 
@@ -25,17 +24,46 @@ DictionaryLookup[x__ /; x === StringReverse@x]
 DictionaryLookup[x__ /; PalindromeQ@x]
 ```
 
+一共 70 个
+
+```csv
+a      ,aha    ,aka  ,bib  ,bob  ,boob ,bub  ,CFC   ,civic,dad
+deed   ,deified,did  ,dud  ,DVD  ,eke  ,ere  ,eve   ,ewe  ,eye
+gag    ,gig    ,huh  ,I    ,kayak,kook ,level,ma'am ,madam,mam
+MGM    ,minim  ,mom  ,mum  ,nan  ,non  ,noon ,nun   ,oho  ,pap
+peep   ,pep    ,pip  ,poop ,pop  ,pup  ,radar,redder,refer,repaper
+reviver,rotor  ,sagas,sees ,seres,sexes,shahs,sis   ,solos,SOS
+stats  ,stets  ,tat  ,tenet,TNT  ,toot ,tot  ,tut   ,wow  ,WWW
+```
+
 
 ### 哪两个字母不可能连在一起？
 
-https://www.zhihu.com/question/25908268
+```wl
+Select[
+	StringJoin /@ Tuples[CharacterRange["a", "z"], {2}],
+	And @@ Function[word, StringFreeQ[word, #]] /@ DictionaryLookup[]&
+]
+```
+
+一共 88 个
+
+```csv
+bq,bx,cf,cg,cj,cp,cv,cx,dx,fq
+fv,fx,fz,gv,gx,hj,hx,hz,jb,jc
+jd,jf,jh,jl,jm,jn,jp,jq,jt,jv
+jw,jx,jy,jz,kx,kz,lx,mg,mx,mz
+pq,pv,px,qc,qd,qe,qf,qg,qh,qj
+qk,ql,qm,qn,qo,qp,qq,qr,qs,qt
+qv,qx,qy,qz,sx,tq,tx,vb,vc,vf
+vj,vk,vm,vp,vq,vw,vx,vz,wq,wv
+wx,xd,xj,xk,yq,zf,zj,zx
+```
 
 
 ### 英文各字母使用频率？
 
 https://www.zhihu.com/question/23111432
-
-
 
 
 ### 英语单词 26 个首字母出现概率各是多少？

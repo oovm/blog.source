@@ -1,26 +1,29 @@
 \title: n! 能否是完全平方数
+\path: Last digits of Graham's Number
+\date: 2019-12-15
+\cats: Mathematics, Number Theory
 
 https://www.zhihu.com/question/322658245
 
 
 n ! 能否是完全平方数
 
-根据Bertrand's postulate（虽然叫postulate但是实际上是一个已经证明的定理），对任意大于2的正整数n，n/2和n之间存在一个素数p。在n的阶乘中，素因子p一定仅出现1次。因此n的阶乘不是完全平方数。
-对于$p^m\ ||\ n!$（$p^{m}\ |\ n!$且$p^{m+1}\ \not\mid\ n!$），有如下公式：
+根据 Bertrand's postulate（虽然叫 postulate 但是实际上是一个已经证明的定理），对任意大于 2 的正整数 n，n/2 和 n 之间存在一个素数 p。在 n 的阶乘中，素因子 p 一定仅出现 1 次。因此 n 的阶乘不是完全平方数。
+对于 $p^m\ ||\ n!$（$p^{m}\ |\ n!$ 且 $p^{m+1}\ \not\mid\ n!$），有如下公式：
 
 $m=pot_p(n!)=\sum_{k=1}^{\infty}{\left[ \frac{n}{p^k}\right]}$
 
-实际上我们只要证明：不超过$n>1$，但离$n$最近的质数，其最大指数一定是$1$，即需证
+实际上我们只要证明：不超过 $n>1$，但离 $n$ 最近的质数，其最大指数一定是 $1$，即需证
 
 $\sum_{k=1}^{\infty}{\left[ \frac{n}{p^k}\right]}=1$
 
 即证
 
-$\left[ \frac{n}{p^k} \right]=\begin{cases}  1&k=1\\  0&  k>1 \end{cases}$
+$\left[\frac{n}{p^k} \right]=\begin{cases}  1&k=1\\  0&  k>1 \end{cases}$
 
 $\Leftrightarrow$
 
-$1=\frac{p}{p}\leq \frac{n}{p}< \frac{2p}{p}=2$
+$1=\frac{p}{p}\leq \frac{n}{p}<\frac{2p}{p}=2$
 
 $\Leftrightarrow$
 
@@ -28,23 +31,23 @@ $p\leq n< 2p$
 
 **证明**：分两种情况：
 
-若$n \in \mathbb{P}$，则命题显然；
+若 $n \in \mathbb{P}$，则命题显然；
 
-若$n \ \bar \in \ \mathbb{P}$，命$p=\max\left\{ q\in \mathbb{P}\ \ |\ \ q<n \right\}$
+若 $n \ \bar \in \ \mathbb{P}$，命 $p=\max\left\{q\in \mathbb{P}\ \ |\ \ q<n \right\}$
 
-现在只需证明$n<2p$即可。若不然，则$\exists \ p^*$满足
+现在只需证明 $n<2p$ 即可。若不然，则 $\exists \ p^*$ 满足
 
 $p<p^*<2p\leq n$
 
-成立原因是伯特兰假设。如此一来，$p^*$的出现与$p$的极大性相矛盾. 所以大于1的阶乘皆非完全平方数.
+成立原因是伯特兰假设。如此一来，$p^*$ 的出现与 $p$ 的极大性相矛盾. 所以大于 1 的阶乘皆非完全平方数.
 
 $Q. E. D$
 
-Handler[hr, {}, {}]
+---
 
 下面我列出 20 以内阶乘的质因数分解式（除 1 外）：
 
-$2!=2 $
+$2!=2$
 
 $3!=2\cdot 3$
 
@@ -82,9 +85,7 @@ $19!=2^{16}\cdot3^8\cdot5^3\cdot7^2\cdot11\cdot13\cdot17\cdot19$
 
 $20!=2^{18}\cdot3^8\cdot5^4\cdot7^2\cdot11\cdot13\cdot17\cdot19$
 
-容易发现分解式中的最后一个质数的指数总是 1，更进一步，只要满足$p\leq n<2p$的质数，其指数也总是 1.
-
-
+容易发现分解式中的最后一个质数的指数总是 1，更进一步，只要满足 $p\leq n<2p$ 的质数，其指数也总是 1.
 
 
 

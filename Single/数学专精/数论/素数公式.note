@@ -1,12 +1,15 @@
 \title: 素数公式
-
+\path: Prime number formula
+\date: 2019-1-30
+\tags: prime, formula
+\cats: Mathematics, Number Theory
 
 **Willson 定理**
 
 $p>1$ 是素数, 当且仅当 $(p-1)!=-1\bmod p$
 
 $$\mathtt{isPrime}(x)
-= \left\lfloor \cos^{2} \pi \frac {(x - 1) ! + 1} {x} \right\rfloor 
+= \left\lfloor \cos^{2} \pi \frac {(x - 1) ! + 1} {x} \right\rfloor
 =\begin{cases}
 1, x\in \mathbb{P}\cup\{1\}\\
 0, \mathrm{others}
@@ -16,7 +19,7 @@ $$\mathtt{countPrime} (n) = \sum_{x = 1}^{n} \mathtt{isPrime}(x)- 1$$
 
 给定自然数 $n$, 满足 $\pi(m)<n$ 的数的数量就是 $p_n -1$.
 
-$$p_{n} = 1 + \sum_{m = 1}^{\infty} \mathrm{is}[\pi (m) < n]$$
+$$p_{n} = 1 + \sum_{m = 1}^{\infty} \mathrm{is}[\pi (m) <n]$$
 
 
 接下来要用到一些素数密度的估计.
@@ -25,16 +28,16 @@ $$p_{n} = 1 + \sum_{m = 1}^{\infty} \mathrm{is}[\pi (m) < n]$$
 
 也就是说小于等于 $2^n$ 的素数至少有 $n$ 个.
 
-于是我们可以把这个无穷大消掉了, 
+于是我们可以把这个无穷大消掉了,
 
-$$\mathtt{isLess}(x , y) 
-= \left\lfloor \sqrt[ y ] {\frac {y} {1 + x}} \right\rfloor
+$$\mathtt{isLess}(x , y)
+= \left\lfloor \sqrt[y] {\frac {y} {1 + x}} \right\rfloor
 =\begin{cases}
 1, x<y\\
 0, x\geqslant y
 \end{cases}$$
 
-$$p_n = 1 + \sum_{m = 1}^{2^{n}} \left\lfloor \sqrt[ n ] {\frac {n} {1 + \pi (m)}} \right\rfloor$$
+$$p_n = 1 + \sum_{m = 1}^{2^{n}} \left\lfloor \sqrt[n] {\frac {n} {1 + \pi (m)}} \right\rfloor$$
 
 
 
@@ -43,7 +46,7 @@ https://www.zhihu.com/question/311834230/answer/595009063
 http://mathworld.wolfram.com/PrimeFormulas.html
 
 Page210
-http://read.pudn.com/downloads133/ebook/566944/%E9%AB%98%E6%95%88%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%A5%A5%E7%A7%98.pdf 
+http://read.pudn.com/downloads133/ebook/566944/%E9%AB%98%E6%95%88%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%A5%A5%E7%A7%98.pdf
 
 
 http://www.m-hikari.com/ams/ams-2012/ams-73-76-2012/kaddouraAMS73-76-2012.pdf

@@ -1,9 +1,8 @@
----
-title: x = cos x
-date: 2018-04-30 23:58:17
-tags:
-categories:
----
+\title: x = cos x
+\date: 2018-04-30 23:58:17
+\tags:
+\categories:
+
 
 ### 玩计算器的发现
 
@@ -49,7 +48,7 @@ x=\cos x°\Longrightarrow& \frac{180 x}{\pi }-90=\cos \left(\frac{ \pi}{180}  \l
 - 辅助圆轨道上假想质点所转过的角度$\angle M$被称为**平近点角(Mean Anomaly)**
 - 将椭圆上的质点向上作延长线,交辅助圆于$x$点所形成的角$\angle E$被称为**偏近点角(Eccentric Anomaly)**
 
-天文学家发现, 它们满足如下关系式: 
+天文学家发现, 它们满足如下关系式:
 
 > **Kepler Equation:**
 > $$M= E-\epsilon \sin(E)$$
@@ -78,16 +77,16 @@ $$\left\{\begin{aligned}
 
 作一下等价性检验:
 
-```mma
+```wl
 In []: FindRoot[x==Cos@x,{x,0}]
        x-Pi/2/.FindRoot[Pi/2==x-Sin@x,{x,1}]
        FindRoot[x==Cos[Pi x/180],{x,0}]
        180x/Pi-90/.FindRoot[Pi/2==x-Pi Sin@x/180,{x,1}]
 
-Out[]: 0.7390851332151605` 
-       {x -> 0.7390851332151607`} 
-       0.9998477415310987` 
-       {x -> 0.9998477415310881`} 
+Out[]: 0.7390851332151605`
+       {x -> 0.7390851332151607`}
+       0.9998477415310987`
+       {x -> 0.9998477415310881`}
 ```
 
 #### 拉格朗日反演
@@ -104,7 +103,7 @@ $$\bigstar E(M)=
 
 Mathematica 可以很方便的执行级数反演.
 
-```mma
+```wl
 Series[M-  Sin[M], {M, 0, 10}]//InverseSeries
 Series[M-e Sin[M], {M, 0, 10}]//InverseSeries
 ```
@@ -151,7 +150,7 @@ a_n&=\frac{2}{\pi n}\int_0^\pi \cos(nM)\,\mathrm{d}g(M)
 > **Bessel Function of the First Kind:**
 > $$J_n(z)=\frac{1}{\pi}\int_0^\pi \cos(n θ-z \sin θ)\,\mathrm{d}θ\ ;n\in \mathbb{Z}$$
 
-于是原式可以写成 
+于是原式可以写成
 
 $$\bigstar E(M)=M+\sum _{n=1}^{\infty } \frac{2}{n}J_n(n \epsilon )\sin(nM)$$
 
@@ -191,7 +190,7 @@ e_4=-\exp(+i M n-i \theta  n+i n \epsilon  \sin (\theta ))\\
 
 可以发现其实都是 $e^{n\alpha}$的结构.
 
-我们引入多对数函数: 
+我们引入多对数函数:
 
 $$\mathrm{Li}_s(z) := z\Phi (z,s,1)=\sum _{n=1}^{\infty } \frac{z^n}{n^s}$$
 
@@ -266,13 +265,13 @@ $$\begin{aligned}
 \mathcal{D}_°=&\frac{1}{\pi }\left[1+\frac{90i}{\pi}\int_0^{\pi}\log \left(-i e^{i (\pi\sin t/180-t)}\right)\;\mathrm{d}t\right]
 \end{aligned}$$
 
-```mma
+```wl
 (*真男人从不回头看数值验证*)
 (2 + I Integrate[Log[-I/E^(I*(t - Sin[t]))], {t, 0, Pi}])/(2*Pi)//N
 (Pi + 90I Integrate[Log[(-I)*E^((-I)*t + (1/180)*I*Pi*Sin[t])], {t, 0, Pi}])/Pi^2//N
 
-> 0.7390851332151609` 
-> 0.9998477415310951` 
+> 0.7390851332151609`
+> 0.9998477415310951`
 ```
 
 #### 只有娘们才喜欢用特殊函数
@@ -290,7 +289,7 @@ $$\begin{aligned}
 
 从这个结果上也能看出这个方法有多残暴...
 
-```mma
+```wl
 (*怎么可以这么暴力的说*)
 \[Pi]/2 Exp[NIntegrate[1/(\[Pi] x) ArcTan[((\[Pi] x+2)Log[(Sqrt[1-x^2]+1)/x]x)/(x^2Log[(Sqrt[1-x^2]+1)/x]^2-\[Pi] x-1)],{x,0,1},WorkingPrecision->50]]
 ArcCot[1+1/(2\[Pi] ) NIntegrate[Log[((1-x^2)Pi^2+4(Sqrt[1-x^2]ArcTanh[x]+x)^2)/((1-x^2)Pi^2+4(Sqrt[1-x^2]ArcTanh[x]-x)^2)],{x,0,1},WorkingPrecision->50]]

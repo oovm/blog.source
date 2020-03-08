@@ -1,4 +1,4 @@
-title: 让 mathematica 与 py & js 快乐的玩耍
+\title: 让 mathematica 与 py & js 快乐的玩耍
 \date: 2018-02-23
 \tags: mathematica, zmq
 \categories: Tutorial, Programming
@@ -32,7 +32,7 @@ Win 不手操 `%Path%` 是没有 `pip` 的, 只有 `python -m pip` , 当初我�
 
 安装成功的话运行如下代码应该得到和我类似的结果
 
-```mma
+```wl
 FindExternalEvaluators[][Delete[#, {#, 1, 1}&/@Range@Length@#]&]
 py=StartExternalSession["Python"]
 js=StartExternalSession["NodeJS"]
@@ -48,14 +48,14 @@ Linux 用户不用教, 都是大佬, 肯定能自己搞定的!
 
 Mac 用户可以出钱请我装. 不知道写两行脚本售价 $99 有没有人买23333.
 
-## 测试 
+## 测试
 
 嗯, 其实装完 git 就能跑 bash 了.
 
-```mma
+```wl
 Bash[command_String]:=RunProcess[{
-    "C:\\Program Files\\Git\\bin\\bash.exe", 
-    "-c", 
+    "C:\\Program Files\\Git\\bin\\bash.exe",
+    "-c",
     command
 }, "StandardOutput"]
 Bash["bash --version | head -1 | tr -d '\n'"]
@@ -80,7 +80,7 @@ Bash["bash --version | head -1 | tr -d '\n'"]
 有意思, Association 的原型果然是这个, 格式化用的是 Mathematica 的格式化, 因为按照浮点运算
 
 ```js
-> Math.log(1000) / Math.LN10 
+> Math.log(1000) / Math.LN10
 < 2.9999999999999996
 ```
 

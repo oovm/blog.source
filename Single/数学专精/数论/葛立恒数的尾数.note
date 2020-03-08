@@ -1,7 +1,7 @@
-
-
-
-
+\title: 葛立恒数的尾数
+\path: Last digits of Graham's Number
+\date: 2019-12-15
+\cats: Mathematics, Number Theory
 
 定义数列 $f_n = 3\char`\^{f_{n-1}}$, $f_0 = 3$
 
@@ -24,12 +24,13 @@ f_{k+1} &= 3^{f_k}\\
 &= f_k×3^{k\cdot10^{k-1}}\\
 \end{aligned}$$
 
-欧拉定理指出，若 $n$,$a$为正整数，且两数互素($\gcd(a,n)=1$)，则
-$$ a^{\varphi(n)} \equiv 1 \pmod n$$
+欧拉定理指出，若 $n$,$a$ 为正整数，且两数互素 ($\gcd(a,n)=1$)，则
+
+$$a^{\varphi(n)} \equiv 1 \pmod n$$
 
 令 $a \leftarrow 3$, $n \leftarrow 10^{n-1}$:
 
-$$ 3^{\varphi(10^{n-1})}=3^{10^{n-1}} \equiv 1 \pmod {10^{n-1}}$$
+$$3^{\varphi(10^{n-1})}=3^{10^{n-1}} \equiv 1 \pmod {10^{n-1}}$$
 
 ---
 
@@ -49,4 +50,3 @@ $$ 3^{\varphi(10^{n-1})}=3^{10^{n-1}} \equiv 1 \pmod {10^{n-1}}$$
 不管怎么说 葛立恒数 只是 I 类大数, I 类大数都是可计算数
 
 II 类大数大多是不可计算数, 那才玩完了...
-

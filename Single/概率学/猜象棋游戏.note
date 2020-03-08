@@ -1,4 +1,5 @@
-# 猜象棋
+\title: 猜象棋游戏
+\date: 2020-03-07 01:13:24
 
 ## Question
 
@@ -10,7 +11,7 @@
 
 假设完全按照上述策略猜测, 那么猜对棋子数的期望是个固定值, 这个值是多少呢?
 
----
+\read_more
 
 ## Solution
 
@@ -47,7 +48,7 @@ $$E(n)\sim\sqrt{\frac{π n}{8}}+\frac{n}{2}-\frac{1}{2}+O(n^{-1/2})$$
 
 ## Calculation
 
-```mathematica
+```wl
 dp[n_, n_] := 2^(2n - 1) / Binomial[2n, n] + n - 1 / 2;
 dp[i_, j_] := i + Sum[Binomial[i + j, k], {k, 0, j - 1}] / Binomial[i + j, i];
 ```
