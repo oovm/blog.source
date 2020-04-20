@@ -1,0 +1,22 @@
+\title: MacOS 配置教程
+\path: MacOS configuration
+\date: 2020-02-29
+\cats: Tutorial
+\tags: mac
+
+MacOS 下方的程序坞(Docker)很碍眼, 丑的和刘海屏有的一拼, 我们一般将其隐藏.
+
+当时隐藏了鼠标移过去不会立即显示, 有一个非常长的延迟, 极度降低效率.
+
+我们可以通过以下命令把这个延迟去掉
+
+```sh
+defaults write com.apple.Dock autohide-delay -float 0 && killall Dock
+```
+
+如果要恢复的话直接设为默认即可:
+
+```sh
+defaults delete com.apple.Dock autohide-delay && killall Dock
+```
+
