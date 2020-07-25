@@ -9,13 +9,13 @@
 
 ## 烷基自由基计数
 
-我们从卤代烃$C_nH_{2n+1}X$开始, X是卤素, 当然也可以是别的取代基.
+我们从卤代烃 $C_nH_{2n+1}X$ 开始, $X$ 是卤素, 当然也可以是别的取代基.
 
 ### Planarisomers
 
-设 Free radicals count ,$\mathtt{Fr}(x)$
+设 Free radicals count 函数为 $\mathtt{Fr}(x)$
 
-三个取代基的置换群若不考虑手性为 S_3 ;若考虑手性为 A_3 \cong \mathbb{Z}_3
+三个取代基的置换群若不考虑手性为 $S_3$ ;若考虑手性为 $A_3 \cong \mathbb{Z}_3$
 
 $$\mathbb{Z}(\mathcal{S}_3)=\frac 16 (2s_3+3s_2s_1+s_1^3)$$
 
@@ -58,9 +58,9 @@ $$p^*-q^*+s=1$$
 
 碳的不同标记方法数-键的不同标记方法数+对称键数=1
 
-let Alkane Count,$\mathtt{Ac}$
+设 Alkane Count 函数为 $\mathtt{Ac}(x)$
 
-\mathtt{Ac}(z)=P(z)-Q(z)+S(z)
+$$\mathtt{Ac}(z)=P(z)-Q(z)+S(z)$$
 
 ### Planarisomers
 
