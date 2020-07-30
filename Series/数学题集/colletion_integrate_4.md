@@ -1,0 +1,158 @@
+---
+title: 积分习题IV
+author: Aster
+type: post
+date: 2016-11-27T07:36:37+00:00
+url: /2016/11/colletion_integrate_4/
+featured_image: /wp-content/uploads/2016/11/colletion_integrate_4_BG-100x38.jpg
+duoshuo_thread_id:
+  - "6377275847019070209"
+categories:
+  - 数学题集
+tags:
+  - 反常积分
+  - 整理
+
+---
+最近碰到一些积分,都是有关开n次根的,那就整理一下好了.
+
+第一个Supercircles的面积积分涉及到的这个:$\int_0^1 {\sqrt[n]{{1 - {x^n}}}} dx$
+
+复习一下欧拉Gamma函数和欧拉Beta函数.
+
+$$\begin{aligned}  
+\Gamma \left( z \right) &= \int_0^\infty {{t^{z - 1}}{e^{ - t}}dt} \\  
+{\rm B}\left( {a,b} \right) &= \frac{{\Gamma \left( a \right)\Gamma \left( b \right)}}{{\Gamma \left( {a + b} \right)}}\\  
+&= \int_0^1 {{t^{a - 1}}{{\left( {1 - t} \right)}^{b - 1}}dt}  
+\end{aligned}$$
+
+<!--more-->
+
+然后是这个题,作个换元:
+
+$$\begin{aligned}  
+t &= {x^n}\\  
+dt &= n{x^{n - 1}}dx\\  
+&= n{t^{1 - \frac{1}{n}}}dx  
+\end{aligned}$$
+
+然后就凑配一下:
+
+$$\begin{aligned}  
+\int_0^1 \sqrt[n]{1-x^n}dx&=\frac{1}{n}\int_0^1t^{\frac{1}{n}-1}(1-t)^{\frac{1}{n}} dt\\  
+&=\frac{1}{n}\int_0^1t^{\frac{1}{n}-1}(1-t)^{1 + \frac{1}{n} - 1} dt\\  
+&=\frac{1}{n}\beta\biggr(\frac{1}{n}, 1+\frac{1}{n}\biggr)\\  
+&=\frac{1}{n}\frac{\Gamma(\frac{1}{n})\Gamma(1+\frac{1}{n})}{\Gamma(\frac{n+2}{n})}\\  
+&=\frac{\Gamma(1+\frac{1}{n})^2}{\Gamma(1 + \frac{2}{n})}\quad\square  
+\end{aligned}$$
+
+* * *
+
+然后看个类似的:
+
+$$\int_0^1 {\frac{1}{{\sqrt[n]{{1 - {x^n}}}}}} dx$$
+
+不过就算长得像,积出来可能就天壤之别了.
+
+还是换元:
+
+$$\begin{aligned}  
+{x^n} &= \frac{{{z^n}}}{{1 + {z^n}}}\\  
+{\text{d}}x &= \frac{{{\text{d}}z}}{{{{(1 + {z^n})}^{1 + 1/n}}}}  
+\end{aligned}$$
+
+$$\begin{aligned}  
+I &= \int_0^1 {\frac{{dx}}{{{{\left( {1 - {x^n}} \right)}^{1/n}}}}} \\  
+&= \int_0^\infty {{{\left( {1 + {z^n}} \right)}^{1/n}}\frac{{dz}}{{{{\left( {1 + {z^n}} \right)}^{1 + 1/n}}}}} \\  
+&= \int_0^\infty {\frac{{dz}}{{1 + {z^n}}}} \\  
+&= \frac{\pi }{{n\sin \left( {\pi /n} \right)}}\quad\square  
+\end{aligned}$$
+
+唔,是不是应该解释下最后一步?这是一个经典积分:
+
+$$I(a,b) = \int_0^\infty  {\frac{{{x^{a - 1}}}}{{{x^b} + 1}}} {\text{d}}x = \frac{\pi }{{b\sin a\pi /b}}$$
+
+引理:欧拉对称公式(Euler's reflection formula)
+
+$$\Gamma (z) \cdot \Gamma (1 - z) = \frac{\pi }{{\sin (\pi z)}}$$
+
+引证:考虑到两者的连乘定义,没啥好证的...
+
+$$\begin{aligned}  
+\frac{1}{{\Gamma (x)}} &= x\prod\limits_{n = 1}^\infty {\frac{{1 + \frac{x}{n}}}{{{{(1 + \frac{1}{n})}^x}}}} \\  
+\sin \pi x &= \pi x\prod\limits_{n = 1}^\infty {\left( {1 + \frac{x}{n}} \right)} \left( {1 - \frac{x}{n}} \right)  
+\end{aligned}$$
+
+那就好了
+
+$$\begin{aligned}  
+\int_0^\infty\dfrac{x^{\large a-1}}{1+x^b}\ dx  
+&=\frac1b\int_0^1y^{\large1-\frac{a}{b}-1}(1-y)^{\large\frac{a}{b}-1}\ dy\\  
+&=\frac1b\cdot\Gamma\left(1-\frac{a}{b}\right)\cdot\Gamma\left(\frac{a}{b}\right)\\  
+&=\large{{\frac{\pi}{b\sin\left(\frac{a\pi}{b}\right)}}}  
+\end{aligned}$$
+
+* * *
+
+一个研究简单高次曲线时会碰到的积分:
+
+$$\int_0^\infty  {(\sqrt[n]{{{x^n} + 1}} - x)} dx = \frac{1}{2}C{\left( { - \frac{1}{n},\frac{1}{n}} \right)^{ - 1}}$$
+
+C这里是组合数的意思.
+
+做代换$x^n \mapsto x$
+
+$$\begin{aligned}  
+I &= \int_0^\infty {\left( {{{(1 + x)}^{1/n}} - {x^{1/n}}} \right)\frac{{{x^{1/n - 1}}}}{n}dx}\\  
+&= \frac{1}{n}\int_0^\infty {{{\left( {1 + x} \right)}^{1/n}}{x^{1/n - 1}} - {x^{2/n - 1}}dx}  
+\end{aligned}$$
+
+接着做代换$t = \frac{1}{{1 + x}} \mapsto x = \frac{1}{t} - 1$
+
+$$\begin{aligned}  
+I &= \frac{1}{n}\int_0^1 {\left[ {{t^{ - 1/n}}{{\left( {1/t - 1} \right)}^{1/n - 1}} - {{\left( {1/t - 1} \right)}^{2/n - 1}}} \right]\left( { - \frac{{dt}}{{{t^2}}}} \right)}\\  
+&= \frac{1}{n}\int_0^1 {{t^{ - \frac{2}{n} - 1}}{{(1 - t)}^{\frac{1}{n} - 1}} - {t^{ - \frac{2}{n} - 1}}{{(1 - t)}^{\frac{2}{n} - 1}}dt}\\  
+&= \frac{1}{n}\int_0^1 {\frac{{dt\left( {{t^{\frac{1}{n} - 1}} - 1} \right)}}{{{{(1 - t)}^{\frac{2}{n} + 1}}}}} - \frac{1}{n}\int_0^1 {\frac{{dt\left( {{t^{\frac{2}{n} - 1}} - 1} \right)}}{{{{(1 - t)}^{\frac{2}{n} + 1}}}}}  
+\end{aligned}$$
+
+然后用这个引理:
+
+$$\int_0^1 {\frac{{{t^a} - 1}}{{{{(1 - t)}^{2/n + 1}}}}} {\mkern 1mu} dt = \frac{n}{2} + \Gamma (a + 1)\Gamma ( - \frac{2}{n})/(a - \frac{2}{n})!\quad n > 2$$
+
+合起来就是:
+
+$$\begin{aligned}  
+\int_0^\infty {(\sqrt[n]{{{x^n} + 1}} - x)} dx  
+&= \frac{1}{n}\frac{{\left( {1/n - 1} \right)!\left( { - 2/n - 1} \right)!}}{{\left( { - 1/n - 1} \right)!}}\\  
+&= \frac{1}{n}\frac{{n\left( {1/n} \right)!\left( { - n/2} \right)\left( { - 2/n} \right)!}}{{ - n\left( { - 1/n} \right)!}}\\  
+&= \frac{1}{2}{\left[ {\frac{{\left( { - 1/n} \right)!}}{{\left( {1/n} \right)!\left( { - 2/n} \right)!}}} \right]^{ - 1}}\\  
+&= \frac{1}{2}C{\left( { - \frac{1}{n},\frac{1}{n}} \right)^{ - 1}}\quad\square  
+\end{aligned}$$
+
+其实还可以推广下:
+
+$$\bigstar\int_0^\infty  ( \sqrt[m]{{1 + {x^n}}} - \sqrt[m]{{{x^n}}})dx = \frac{n}{{n + m}}C{\left( { - \frac{1}{m},\frac{1}{n}} \right)^{ - 1}}$$
+
+* * *
+
+来道水题放松下:
+
+$$\begin{aligned}  
+\int_0^\infty {\frac{{\sqrt[n]{x}}}{{1 + {x^2}}}dx} {\mkern 1mu}  
+&=\frac{1}{2}\int_0^\infty {{\mkern 1mu} \frac{{{t^{\frac{{1 - n}}{{2n}}}}}}{{1 + t}}dt}\\  
+&= \frac{1}{2}\textstyle B\left(\frac{1}{2} + \frac{1}{2n}, \frac{1}{2} - \frac{1}{2n}\right) \\  
+&= \frac{1}{2} \textstyle\Gamma\left(\frac{1}{2} + \frac{1}{2n}\right)\Gamma\left(\frac{1}{2} - \frac{1}{2n}\right) \\  
+&= \frac{\pi}{2 \sin\left(\frac{\pi}{2} + \frac{\pi}{2n}\right)} \\  
+&= \frac{\pi}{2} \sec \frac{\pi}{2n}  
+\end{aligned}$$
+
+* * *
+
+$$S(a) = a \cdot {2^{a - 1}}\left[ {\frac{1}{2}\;\beta \left( {\frac{a}{2},\;\frac{a}{2}} \right)\; + \beta \left( {\frac{{a + 1}}{2},\;\frac{{a + 1}}{2}} \right)} \right]$$
+
+$$\begin{aligned}  
+\bigstar \int_0^1 {\sqrt {\frac{{1 + {x^n}}}{{1 - {x^n}}}} } \;dx\; &= S(\frac{1}{n})\\  
+\bigstar \int_0^1 {\sqrt[n]{{\frac{{1 + {x^2}}}{{1 - {x^2}}}}}} \;dx\; &= S( - \frac{1}{n})  
+\end{aligned}$$
+
+试着用Mathematica验证了一下,待证明.
