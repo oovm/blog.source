@@ -1,20 +1,9 @@
----
-title: 级数习题III:复合黎曼级数
-author: Aster
-type: post
-date: 2016-11-06T00:49:52+00:00
-url: /2016/11/colletion_series_3/
-featured_image: /wp-content/uploads/2016/11/colletion_series_3_BG-100x69.jpg
-duoshuo_thread_id:
-  - "6377335383675372289"
-categories:
-  - 数学题集
-tags:
-  - 习题
-  - 收集
-  - 无穷级数
+\title: 级数习题 III: 复合黎曼级数
+\date: 2016-11-06T00:49:52
+\cats: Practice, Math
+\tags: collection, series, zeta function
 
----
+
 这几个题目如果试过泰勒展开tan,cot的话可能会比较容易,没试过的可以看下我前面的文章,直接搜索关键词 tan 泰勒就可以了.
 
 不过也无所谓,用泰勒的话有点舍近求远.反正老老实实做也不是很难.

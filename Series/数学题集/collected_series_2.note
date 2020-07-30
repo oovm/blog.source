@@ -1,20 +1,8 @@
----
-title: 级数习题II:复合调和级数
-author: Aster
-type: post
-date: 2016-09-11T03:48:49+00:00
-url: /2016/09/colletion_series_2/
-featured_image: /wp-content/uploads/2016/09/colletion_series_2_BG-100x56.jpg
-duoshuo_thread_id:
-  - "6373825087765742337"
-categories:
-  - 数学题集
-tags:
-  - 收集
-  - 无穷级数
-  - 调和级数
+\title: 级数习题 II: 复合调和级数
+\date: 2016-09-11T03:48:49
+\cats: Practice, Math
+\tags: collection, series, harmonic series
 
----
 从上节的内容中我们已经知道了调和级数$\frac{1}{n}$以及复合调和级数$\frac{H_n}{n}$也不收敛.
 
 这实在是很有趣的事情,这一节我们来看一些收敛的案例.
