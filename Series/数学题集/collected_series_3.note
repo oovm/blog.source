@@ -1,0 +1,188 @@
+\title: 级数习题 III: 复合黎曼级数
+\date: 2016-11-06T00:49:52
+\cats: Practice, Math
+\tags: zeta function
+
+
+这几个题目如果试过泰勒展开tan,cot的话可能会比较容易,没试过的可以看下我前面的文章,直接搜索关键词 tan 泰勒就可以了.
+
+不过也无所谓,用泰勒的话有点舍近求远.反正老老实实做也不是很难.
+
+首先,黎曼函数的定义
+
+$$\zeta(n)=\sum\limits_{k=1}^\infty\frac1{k^{n}}$$
+
+然后就没有然后了...
+
+<!--more-->
+
+* * *
+
+求证:
+
+$$\sum\limits_{n = 2}^\infty  {\frac{{\zeta (n)}}{{{2^n}}}}  = \frac{{\zeta (2)}}{{{2^2}}} + \frac{{\zeta (3)}}{{{2^3}}} + \frac{{\zeta (4)}}{{{2^4}}} + \frac{{\zeta (5)}}{{{2^5}}} + ... = \ln 2$$
+
+证:
+
+$$\begin{aligned}  
+\sum_{k\geqslant2}\frac{\zeta(k)}{2^{k}}&=\sum_{k\geqslant2}\sum_{n\geqslant1}\frac{1}{n^k2^{k}}=\sum_{n\geqslant1}\frac1n\sum_{k\geqslant2}\frac{1}{(2n)^{k}}\\  
+&=\sum_{n\geqslant1}\frac1n\frac1{n}\frac1{1-\frac1{2n}}=\sum_{n\geqslant1}\frac1{2n(2n-1)}\\  
+&=\sum_{n\geqslant1}(\frac1{2n-1}-\frac1{2n})=\sum_{i\geqslant1}\frac{(-1)^{i-1}}i\\  
+&=\log2  
+\end{aligned}$$
+
+更一般的:
+
+$$\bigstar \sum _{n=1}^{\infty } \frac{\zeta (n+1)}{x^{n+1}}=\frac{-\psi ^{(0)}\left(1-\frac{1}{x}\right)-\gamma }{x}= - \frac{1}{x}H( - \frac{1}{x})$$
+
+* * *
+
+求证:$$\zeta (0) =  - \frac{1}{2}$$
+
+证:
+
+$$\begin{aligned}  
+\int_0^\infty\frac{xt^{x-1}}{e^t+1}\mathrm{d}t  
+&=\int_0^\infty\frac{xt^{x-1}}{1+e^{-t}}e^{-t}\;\mathrm{d}t\\  
+&=x\sum_{k=1}^\infty(-1)^{k-1}\int_0^\infty t^{x-1}e^{-kt}\;\mathrm{d}t\\  
+&=x\sum_{k=1}^\infty(-1)^{k-1}k^{-x}\int_0^\infty t^{x-1}e^{-t}\;\mathrm{d}t\\  
+&=(1-2^{1-x})\zeta(x)\Gamma(x+1)\\  
+\lim_{x\to0^+}\int_0^\infty\frac{xt^{x-1}}{e^t+1}\mathrm{d}t  
+&=\lim_{x\to0^+}\int_0^\infty\frac{t^xe^t}{(e^t+1)^2}\mathrm{d}t\\  
+&=\int_1^\infty\frac{\mathrm{d}u}{(u+1)^2}\\  
+&=\frac{1}{2}  
+\end{aligned}$$
+
+所以有
+
+$$\begin{aligned}  
+(1-2^{1-x})\zeta(x)\Gamma(x+1) &=\frac{1}{2}\\  
+- \zeta (0)\Gamma (1) &= \frac{1}{2}\\  
+\zeta (0) &= - \frac{1}{2}\quad \square  
+\end{aligned}$$
+
+* * *
+
+求证:
+
+$$\zeta'(0) =  - \frac{1}{2}\log (2\pi )$$
+
+我们知道
+
+$$\zeta'(a) =  - \sum\limits_{n = 1}^\infty  {\frac{{\ln n}}{{{n^a}}}} \;\quad a \in \left( {1, + \infty } \right)$$
+
+不过这个对a=0并不适用,要点别的求法.
+
+首先写出黎曼函数的函数方程定义式:
+
+$$\zeta (z) = {2^z}{\pi ^{z - 1}}\sin \left( {\frac{{\pi z}}{2}} \right)\Gamma \left( {1 - z} \right)\zeta \left( {1 - z} \right)$$
+
+对式子两边使用对数求导法
+
+$$\frac{{\zeta'(z)}}{{\zeta (z)}} = \log 2 + \log \pi  - \frac{{\Gamma'\left( {1 - z} \right)}}{{\Gamma \left( {1 - z} \right)}} + \frac{d}{{dz}}\log \left( {\sin \left( {\frac{{\pi z}}{2}} \right)\zeta \left( {1 - z} \right)} \right)$$
+
+然后对下式做低阶展开
+
+$$\begin{aligned}  
+&\left\{ \begin{gathered}  
+\zeta (1 - z) = - \frac{1}{z} + \gamma + O(z)\\  
+\sin \left( {\frac{{\pi z}}{2}} \right) = \frac{{\pi z}}{2} + O\left( {{z^3}} \right)\\  
+\end{gathered} \right.\\  
+\Rightarrow &\sin \left( {\frac{{\pi z}}{2}} \right)\zeta \left( {1 - z} \right) = \frac{\pi }{2} - \frac{{\pi \gamma }}{2}z - O({z^4} + \gamma {z^3} - {z^2} + \frac{1}{2}\pi {z^2})\\  
+\Rightarrow &\frac{d}{{dz}}\log \left( {\sin \left( {\frac{{\pi z}}{2}} \right)\zeta \left( {1 - z} \right)} \right) = \frac{{ - \frac{{\pi \gamma }}{2} + O\left( z \right)}}{{\frac{\pi }{2} + O\left( z \right)}} = - \gamma + O(z)\\  
+\end{aligned}$$
+
+于是
+
+$$\frac{{\zeta'(0)}}{{\zeta (0)}} = \log 2\pi  - \Gamma'\left( 1 \right) - \gamma $$
+
+引证:
+
+$$\begin{aligned}  
+\log\Gamma(z)&=-\log z-\gamma z-\sum_{k=1}^\infty\left[\log\left(1+\frac zk\right)-\frac zk\right]\\  
+\frac{\Gamma'(z)}{\Gamma(z)}&=-\frac1z-\gamma-\sum_{k=1}^\infty\left(\frac1k\frac k{k+z}-\frac1k\right)\\  
+&=-\frac1z-\gamma-\sum_{k=1}^\infty\left(\frac1{k+z}-\frac1k\right)\\  
+\Gamma'(1)&=\frac{\Gamma'(1)}{\Gamma(1)}=-1-\gamma-\left(\frac12-1+\frac13-\frac12+\ldots\right)\\  
+&=-1-\gamma-(-1)=-\gamma  
+\end{aligned}$$
+
+说到这个,有个很有趣的恒等式
+
+$$ - \int_0^1 {\ln } \ln \frac{1}{x}{\mkern 1mu} dx = \gamma $$
+
+代入即得
+
+$$\zeta'(0) =  - \log \sqrt {2\pi }\quad \square $$
+
+* * *
+
+求证:
+
+$$\sum\limits_{n = 1}^\infty  {\frac{{\zeta (2n)}}{{{\pi ^{2n}}}}}  = \frac{{1 - \cot 1}}{2}$$
+
+证:
+
+$$\begin{aligned}  
+\zeta \left( {2n} \right) &= {\left( { - 1} \right)^{n + 1}}\frac{{{B_{2n}}{2^{2n - 1}}{\pi ^{2n}}}}{{\left( {2n} \right)!}},\;n \geqslant 1 \\  
+\cot \left( z \right) &= \frac{1}{z} - 2\sum\limits_{k \geqslant 1} \zeta \left( {2k} \right)\frac{{{z^{2k - 1}}}}{{{\pi ^{2k}}}},\;0 < \left| z \right| < \pi \\  
+\sum\limits_{n = 1}^\infty {\frac{{\zeta (2n)}}{{{\pi ^{2n}}}}} &= \frac{{1 - \cot 1}}{2}  
+\end{aligned}$$
+
+收工.这个是洛朗展开式,和泰勒展开长的有点不一样:
+
+$$\begin{aligned}  
+\cot (x) &= \mathop \sum \limits\_{n = 0}^\infty \frac{{{{( - 1)}^n}{2^{2n}}{B\_{2n}}{x^{2n - 1}}}}{{(2n)!}}&0 < |x| < \pi\\  
+\cot (z) &= \frac{1}{z} - 2\sum\limits_{k = 1}^\infty \zeta (2k)\frac{{{z^{2k - 1}}}}{{{\pi ^{2k}}}}&0 < |z| < \pi  
+\end{aligned}$$
+
+更一般的,我们有
+
+$$\bigstar \sum\limits_{k = 1}^\infty  \zeta  (2k){x^{2k}} = \frac{1}{2}(1 - \pi x\cot (\pi x))$$
+
+证:
+
+$$\begin{aligned}  
+f(x)  
+&=\sum_{k=1}^\infty\zeta(2k)\,x^{2k}=\sum_{k=1}^\infty\sum_{n=1}^\infty\frac{x^{2k}}{n^{2k}}\\  
+&=\sum_{n=1}^\infty\frac{x^2/n^2}{1-x^2/n^2}=\sum_{n=1}^\infty\frac{x^2}{n^2-x^2}\\  
+&=-\frac{x}{2}\sum_{n=1}^\infty\left(\frac{1}{x-n}+\frac{1}{x+n}\right)\\  
+&=-\frac{x}{2}\left(\pi\cot(\pi x)-\frac1x\right)\\  
+&=\frac12(1-\pi x\cot(\pi x)) \quad \square  
+\end{aligned}$$
+
+然后这个经典求和就很好搞定了
+
+$$\begin{aligned}  
+&\sum\limits_{k = 1}^\infty \zeta (2k){\left( {\frac{1}{2}} \right)^{2k - 1}}\\  
+=& \frac{{\zeta (2)}}{2} + \frac{{\zeta (4)}}{{{2^3}}} + \frac{{\zeta (6)}}{{{2^5}}} + \frac{{\zeta (8)}}{{{2^7}}} + \cdots\\  
+=& 1 - \frac{\pi }{2}\cot \left( {\frac{\pi }{2}} \right) = 1\\  
+\end{aligned}$$
+
+* * *
+
+最后发个我发现的有趣的级数,不知道能不能推出通式:
+
+$$\begin{aligned}  
+{S\_1} &= \sum_{n \geqslant 2} {\left( {\zeta (n) - 1} \right)} = \int_0^{ + \infty } {\sum_{m \geqslant 1} {\frac{{{x^m}}}{{m!}}} } \left( {\frac{1}{{{e^x} - 1}} - \frac{1}{{{e^x}}}} \right){\mkern 1mu} dx \\  
+&= \int_0^{ + \infty } {({e^x} - 1)} \left( {\frac{1}{{{e^x} - 1}} - \frac{1}{{{e^x}}}} \right){\mkern 1mu} dx = \int_0^{ + \infty } {{e^{ - x}}} {\mkern 1mu} dx = 1 \\  
+{S\_2} &= \sum_{n \geqslant 1} {\left( {\zeta (2n) - 1} \right)} = \int_0^{ + \infty } {\sum_{m \geqslant 0} {\frac{{{x^{2m + 1}}}}{{(2m + 1)!}}} } \left( {\frac{1}{{{e^x} - 1}} - \frac{1}{{{e^x}}}} \right){\mkern 1mu} dx \\  
+&= \int_0^{ + \infty } {\frac{{\sinh (x)}}{{{e^x}({e^x} - 1)}}} {\mkern 1mu} dx = \frac{1}{2}\int_1^{ + \infty } {\frac{{u - \frac{1}{u}}}{{{u^2}(u - 1)}}} {\mkern 1mu} du = \frac{1}{2}\int_1^{ + \infty } {\frac{{u + 1}}{{{u^3}}}} {\mkern 1mu} du = \frac{3}{4}\\  
+{S\_3} &= \sum_{n \geqslant 1} {\left( {\zeta (3n) - 1} \right)} = \frac{1}{3}\left( {\sqrt[3]{{ - 1}}H\left( {\frac{{3 + i\sqrt 3 }}{2}} \right) - {{( - 1)}^{2/3}}H\left( {\frac{{3 - i\sqrt 3 }}{2}} \right)} \right)\\  
+{S\_4} &= \sum_{n \geqslant 1} {\left( {\zeta (4n) - 1} \right)} = \frac{1}{8}(7 - 2\pi \coth (\pi ))  
+\end{aligned}$$
+
+还有一些其他Mathematica上的,MathWorld上的,Wiki上的,有空推导下
+
+$$\left\{ \begin{aligned}  
+&\sum\limits_{n = 1}^\infty {(\zeta (2n) - 1)} &&= \frac{3}{4}\\  
+&\sum\limits_{n = 1}^\infty {(\zeta (2n + 1) - 1)} &&= \frac{1}{4}  
+\end{aligned}\right.$$
+
+$$\begin{aligned}  
+\sum\limits_{n = 2}^\infty {\frac{{\zeta (n) - 1}}{n}}\; &= \log 2 - \gamma \\  
+\sum\limits_{n = 1}^\infty {\frac{{\zeta (2n) - 1}}{n}} &= \log 2 \\  
+\sum\limits_{n = 1}^\infty {\frac{{\zeta (3n) - 1}}{n}} &= \log \left( {3\pi {\text{sech}}\left( {\frac{{\sqrt 3 \pi }}{2}} \right)} \right) \\  
+\sum\limits_{n = 1}^\infty {\frac{{\zeta (4n) - 1}}{n}} &= \log (4\pi {\text{csch}}(\pi ))  
+\end{aligned}$$
+
+$$\bigstar \sum\limits_{n = 1}^\infty  {\frac{{\zeta (2n) - 1}}{{{a^{2n}}}}}  = \frac{1}{2} + \frac{1}{{1 - {a^2}}} - \frac{\pi }{{2a}}\cot (\frac{\pi }{a})$$
