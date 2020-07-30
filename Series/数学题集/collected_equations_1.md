@@ -1,20 +1,8 @@
----
-title: 方程习题I
-author: Aster
-type: post
-date: 2016-10-03T12:50:02+00:00
-url: /2016/10/colletion_equation_1/
-featured_image: /wp-content/uploads/2016/10/colletion_equation_1_BG-100x69.jpg
-duoshuo_thread_id:
-  - "6373628727762354945"
-categories:
-  - 数学题集
-tags:
-  - 不动点
-  - 傅里叶变换
-  - 微分方程
+\title: 方程习题 I
+\date: 2016-10-03T12:50:02
+\cats: Practice, Math
+\tags: fixed point, fourier transform, differential equation
 
----
 > Q:求解傅里叶变换的不动点,即求解积分方程$f(x) = \mathfrak{F}(f(x)) = \int_{ - \infty }^\infty  {f(\xi ){e^{ - 2\pi ix\xi }}d\xi } $
 
 考虑矩阵方程${F^4} = I$,取
