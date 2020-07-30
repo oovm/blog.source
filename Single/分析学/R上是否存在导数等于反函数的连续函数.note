@@ -1,0 +1,44 @@
+\title: R上是否存在导数等于反函数的连续函数
+\date: 2018-7-14
+
+满足 $f'(x)=f_{-1}(x)$ 这样的连续函数在 $\mathbb{R}$ 上不存在
+
+$f(x)$ 要是有反函数, 那必须在整个定义域上单调, 那 $f'(x)$ 就不能变号
+
+但同时又要求他是个连续函数, $f(x)$ 必定要穿过 $y$ 轴, $f_{-1}(x)$ 关于 $y=x$ 对称必定穿过 $x$ 轴
+
+这不就必须变号了吗, $f_{-1}(x)$ 非要变号而 $f'(x)$ 不能变号怎么能相等, 矛盾!
+
+\read_more
+
+---
+
+嗯, 所以我们还有不连续函数, 举个例子:
+
+定义在 $\mathbb{R}$ 或者说 $\mathbb{R}\backslash\{0\}$ 上的函数:
+
+$$f(x)=\begin{cases} \phi ^{1-\phi } x^{\phi } & x\geq0 \\ -(\phi -1)^{\phi } (-x)^{1-\phi } & x<0 \\ \end{cases}$$
+
+其中 $\phi =\frac{1}{2} \left(\sqrt{5}+1\right)$ , 也就是黄金分割数, 可以验证
+
+$$f_{-1}(x)=f'(x)= \begin{cases}
+    \phi^{2-\phi } x^{\phi -1} & x>0 \\
+    -(\phi -1)^{\phi +1} (-x)^{-\phi } & x<0\\
+    \text{Indeterminate} & x=0 \\
+\end{cases}$$
+
+\img: https://pic4.zhimg.com/50/v2-50d65202389511e95dd12b454bd79598_hd.jpg
+
+具体怎么解这个方程可以看 \link[Function satisfying $f^{-1} =f'$][https://link.zhihu.com/?target=https%3A//mathoverflow.net/questions/34052/function-satisfying-f-1-f/34095%2334095]
+
+考虑定义在 $\mathbb{R}_+$ 上的函数 $f(x)$ , 构造辅助函数
+
+$$x=h(t),f(x)=h(a t),f^{-1}(x)=h(t/a)$$
+
+于是原方程转化为 $h(t/a) h'(t)=a h'(at)$ , 于是方程的解可以表达为
+
+$$\color{blue}{f(x):=h(ah^{-1}(x))}$$
+
+这玩意儿数竞里叫桥函数, 选择合理的参数能得到不同的迭代函数解解族
+
+然后把俩解用分段函数揉一起就行了.
