@@ -1,14 +1,19 @@
 \title: Github 复活大法
 \date: 2019-01-19 22:33:22
+\tags: github, git
+
+
 问题：
 我在Git中提交了错误的文件。我该如何撤销那一次commit呢？
 高票答案1：
+
+```sh
 $ git commit -m "Something terribly misguided"              (1)
 $ git reset HEAD~                                           (2)
 << edit files as necessary >>                               (3)
 $ git add ...                                               (4)
 $ git commit -c ORIG_HEAD                                   (5)
-
+````
 
 这是你想撤销的那步操作
 这一步不会让你的工作区（你磁盘上文件的状态）发生改变，但是会撤销上次的commit，并且将你第一步commit的那些改动从暂存区移除（所以当你再次使用git status查看状态的时候，它们会出现在‘Changes not staged for commit’这句话的下面。提交他们之前，你需要再把它们add一次）。如果你只想为之前的commit增加更多的改动，或者改变之前的提交信息，你应该使用get reset --soft HEAD~，和git rest HEAD~有些类似，但是会将你的改动保留在暂存区内。

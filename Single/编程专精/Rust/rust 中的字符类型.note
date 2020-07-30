@@ -1,6 +1,6 @@
 \title: rust 中的字符类型
 \date: 2020-3-5
-
+\tags: rust, type
 
 - `&str`
 - `String`
@@ -88,4 +88,3 @@ String, 堆(heap)上是一串比特数组[u8].
 - `PathBuf`：Path的可变版本, 拥有自己的生命周期
 
 与他们打交道你可能会爆炸, 因为每一步几乎都会返回 Option 或者 Result
-

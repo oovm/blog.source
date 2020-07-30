@@ -26,7 +26,7 @@ DictionaryLookup[x__ /; PalindromeQ@x]
 
 一共 70 个
 
-```csv
+```txt
 a      ,aha    ,aka  ,bib  ,bob  ,boob ,bub  ,CFC   ,civic,dad
 deed   ,deified,did  ,dud  ,DVD  ,eke  ,ere  ,eve   ,ewe  ,eye
 gag    ,gig    ,huh  ,I    ,kayak,kook ,level,ma'am ,madam,mam
@@ -48,7 +48,7 @@ Select[
 
 一共 88 个
 
-```csv
+```txt
 bq,bx,cf,cg,cj,cp,cv,cx,dx,fq
 fv,fx,fz,gv,gx,hj,hx,hz,jb,jc
 jd,jf,jh,jl,jm,jn,jp,jq,jt,jv
