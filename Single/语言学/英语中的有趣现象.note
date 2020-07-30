@@ -65,6 +65,9 @@ wx,xd,xj,xk,yq,zf,zj,zx
 
 https://www.zhihu.com/question/23111432
 
+word = DictionaryLookup[{"English", "*"}];
+word // StringJoin // CharacterCounts[#, IgnoreCase -> True] & // 
+  KeySelect[#, MemberQ[Alphabet[], #] &] & // Sort
 
 ### 英语单词 26 个首字母出现概率各是多少？
 
