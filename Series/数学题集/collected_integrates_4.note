@@ -1,19 +1,8 @@
----
-title: 积分习题IV
-author: Aster
-type: post
-date: 2016-11-27T07:36:37+00:00
-url: /2016/11/colletion_integrate_4/
-featured_image: /wp-content/uploads/2016/11/colletion_integrate_4_BG-100x38.jpg
-duoshuo_thread_id:
-  - "6377275847019070209"
-categories:
-  - 数学题集
-tags:
-  - 反常积分
-  - 整理
+\title: 积分习题 IV
+\date: 2016-11-27T07:36:37
+\cats: Practice, Math
+\tags: improper integral
 
----
 最近碰到一些积分,都是有关开n次根的,那就整理一下好了.
 
 第一个Supercircles的面积积分涉及到的这个:$\int_0^1 {\sqrt[n]{{1 - {x^n}}}} dx$

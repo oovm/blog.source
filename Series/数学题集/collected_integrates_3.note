@@ -1,20 +1,9 @@
----
-title: 积分习题III:取整积分(下)
-author: Aster
-type: post
-date: 2016-07-10T05:12:58+00:00
-url: /2016/07/colletion_integrate_1-2/
-featured_image: /wp-content/uploads/2016/06/colletion_integrate_3_BG-100x71.jpg
-duoshuo_thread_id:
-  - "6373465170181620481"
-categories:
-  - 数学题集
-tags:
-  - 取整函数
-  - 收集
-  - 积分习题
+\title: 积分习题 III: 取整积分(下)
+\date: 2016-07-10T05:12:58
+\cats: Practice, Math
+\tags: rounding function
 
----
+
 今天说点进阶难度的题:求证
 
 $$\int_0^1 {\left\lfloor {\frac{\alpha }{x}} \right\rfloor  - \alpha \left\lfloor {\frac{1}{x}} \right\rfloor } {\text{d}}x = \alpha \ln \alpha \quad \alpha  \in (0,1)$$

@@ -1,20 +1,8 @@
----
-title: 积分习题I:取整积分(上)
-author: Aster
-type: post
-date: 2016-07-08T05:35:26+00:00
-url: /2016/07/colletion_integrate_1/
-featured_image: /wp-content/uploads/2016/06/colletion_integrate_1_BG-100x75.jpg
-duoshuo_thread_id:
-  - "6373465170030625538"
-categories:
-  - 数学题集
-tags:
-  - 取整函数
-  - 收集
-  - 积分习题
+\title: 积分习题 I: 取整积分(上)
+\date: 2016-07-09T06:36:02
+\cats: Practice, Math
+\tags: rounding function
 
----
 先来给出取整函数的定义,取整函数有两个,上取整函数$\left\lceil x \right\rceil $和下取整函数$\left\lfloor x \right\rfloor $,然后可以组合出取小数函数$\left\{ x \right\}$和舍入函数$ \lfloor x \rceil $.其中取小数函数是个周期函数,就是个三角波,所以我们可以用傅里叶展开它.有时候实在搞不清题目在说什么玩意儿就统统展开再算.
 
 $$\begin{aligned}  

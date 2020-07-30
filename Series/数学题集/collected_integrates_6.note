@@ -1,20 +1,9 @@
----
-title: 积分习题VI:参数积分
-author: Aster
-type: post
-date: 2016-12-22T15:23:22+00:00
-url: /2016/12/colletion_integrate_6/
-featured_image: /wp-content/uploads/2016/12/colletion_integrate_6_BG-100x40.jpg
-duoshuo_thread_id:
-  - "6377278182038438657"
-categories:
-  - 数学题集
-tags:
-  - 参数积分
-  - 战力
-  - 积分
+\title: 积分习题 VI: 参数积分
+\date: 2016-12-22T15:23:22
+\cats: Practice, Math
+\tags: parametric integral
 
----
+
 有时候很多定积分不是很好算,但是转化为参积分就会好的多:
 
 一个经典的例子就是:
