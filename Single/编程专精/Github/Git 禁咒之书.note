@@ -1,12 +1,6 @@
-\title: Github 禁咒之书
-\date: 2019-01-05 16:56:09
----
-title: Github 禁咒之书
-date: 2018-02-10 09:14:53
-tags:
-  - Github
-categories:
----
+\title: Git 禁咒之书
+\date: 2018-02-10 09:14:53
+\tags: git
 
 git 禁咒是指那些会导致历史hash改变的操作, 千万不要在协同开发的项目上玩这个.
 
