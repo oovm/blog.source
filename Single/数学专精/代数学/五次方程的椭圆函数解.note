@@ -1,0 +1,43 @@
+
+# 五次方程的模椭圆函数解
+
+定义 $$K=K(k)=\int_{0}^{\frac{\pi}{2}}\frac{\mathrm{d}\phi}{\sqrt{1-k^2\sin^2\phi}}$$
+
+令 $k'=\sqrt{1-k^2}$, 则 $K'=K(k')=K(\sqrt{1-k^2})$.
+
+记 $\omega=i K'/K$, 则可以将$k$与$k'$ 表示成$\omega$的函数, 也就是说存在单复变解析函数$\varphi$与$\psi$满足:
+$$\varphi(\omega)=\sqrt[4]{k},\psi=\sqrt[4]{k'}$$
+
+记$q=\exp(-\pi K'/K)=e^{i\pi\omega}$, 可以将上式表示为所谓的 $q-级数$.
+
+$$\begin{cases}
+&\varphi(\omega)=\sqrt[4]{k}= \sqrt[8]{16q}\frac{\sum q^{2m^2+m}}{\sum q^{m^2}}\\
+&\psi=\sqrt[4]{k'}=\sqrt[8]{1-k^2}=\frac{\sum(-1)^m q^{2m^2}}{\sum q^{m^2}}
+\end{cases}$$
+
+记$u=\varphi(\omega),v=\psi(5\omega)$ 则有:
+
+$$u^6-v^6+5u^2v^2(u^2-v^2)+4uv(1-u^4v^4)=0$$
+
+这就是所谓的**模方程**, 根据模函数的性质有:
+
+$$\sqrt[4]{k\left(\frac{a\omega+b}{c\omega+d}\right)}=(-1)^{(a^2+ab-1)/8}\sqrt[4]{k(\omega)}$$
+
+其中$a,d$为奇数,$b,c$为偶数,且满足$ad-bc=1$.
+
+接着构造函数:
+
+$$\Phi (\tau )=\left[\varphi (5\tau )+\varphi \left({\frac  {\tau }{5}}\right)\right]\left[\varphi \left({\frac  {\tau +16}{5}}\right)-\varphi \left({\frac  {\tau +64}{5}}\right)\right]\left[\varphi \left({\frac  {\tau +32}{5}}\right)-\varphi \left({\frac  {\tau +48}{5}}\right)\right]$$
+
+根据契恩豪斯变换,一般五次方程都能转化为布林杰拉德正规式.
+
+$$x^5-x+a=0$$
+
+其五根分别为:
+
+$$x_{i}={\frac  {\Phi (\tau +16i)}{2{\sqrt[ {4}]{125}}\varphi (\tau )\psi ^{4}(\tau )}}\quad i\in\{0,1,2,3,4\}$$
+
+容易验证  $\Phi (\tau ),\Phi (\tau +16),\Phi (\tau +32),\Phi (\tau +48),\Phi (\tau +64)$满足如下五次方程:
+
+$$\Phi^5 - 2000\varphi^4(\tau)\psi^{16}(\tau)\Phi + 1600\sqrt{5}\varphi^3(\tau)\psi^{16}(\tau)\left[1 + \varphi^8(\tau)\right] = 0$$
+
