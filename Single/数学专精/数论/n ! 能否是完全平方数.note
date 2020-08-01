@@ -3,7 +3,7 @@
 \date: 2019-12-15
 \cats: Math, Number Theory
 
-> $n!$ 能否是完全平方数?
+> $n!$ 除了 0! 和 1! 是否还有其他完全平方数?
 
 根据 Bertrand's Postulate, 对于任意大于 $2$ 的正整数 $n$, $n/2$ 和 $n$ 之间存在一个素数 $p$.
 
