@@ -1,0 +1,1 @@
+https://account.wolfram.com/download/wolfram-alpha-notebook/desktop/LINUX
