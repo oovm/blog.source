@@ -105,6 +105,13 @@ public BigDecimal priceOfCar(Car car){
 
 而继承则是编程语言的一种特性，换句话说，就是通过继承描述了子类型关系。
 
+在面向对象的程序设计中，里氏替换原则（Liskov Substitution principle）是对子类型的特别定义。它由芭芭拉·利斯科夫（Barbara Liskov）在1987年在一次会议上名为“数据的抽象与层次”的演说中首先提出。[1]
+
+里氏替换原则的内容可以描述为： “派生类（子类）对象可以在程序中代替其基类（超类）对象。” 以上内容并非利斯科夫的原文，而是译自罗伯特·马丁（Robert Martin）对原文的解读。其原文为：
+
+Let {\displaystyle q(x)}q(x) be a property provable about objects {\displaystyle x}x of type {\displaystyle T}T. Then {\displaystyle q(y)}q(y) should be true for objects {\displaystyle y}y of type {\displaystyle S}S where {\displaystyle S}S is a subtype of {\displaystyle T}T.
+芭芭拉·利斯科夫与周以真（Jeannette Wing）在1994年发表论文并提出以上的Liskov代换原则。
+
 ## Row polymorphism
 
 变体多态
