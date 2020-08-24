@@ -1,22 +1,20 @@
-
-# 多态
-
-标签（空格分隔）： 未分类
-
----
-
 ## Polymorphism
 
-在编程语言和类型论中，多态（英语：polymorphism）指为不同数据类型的实体提供统一的接口。 [1]多态类型（英语：polymorphic type）可以将自身所支持的操作套用到其它类型的值上。[2]
+在编程语言和类型论中, 多态(Polymorphism)指为不同数据类型的实体提供统一的接口
 
-计算机程序运行时，相同的消息可能会送给多个不同的类别之对象，而系统可依据对象所属类别，引发对应类别的方法，而有不同的行为。简单来说，所谓多态意指相同的消息给予不同的对象会引发不同的动作。多态也可定义为“一种将不同的特殊行为和单个泛化记号相关联的能力”。
+多态类型(Polymorphic Type)可以将自身所支持的操作套用到其它类型的值上.
 
-实际上都是，无论重载、泛型，还是继承关系都是多态的一个具体体现，也被归属为不同的多态分类
+一般根据条件可以将多态分为以下两种:
 
-- Ad hoc polymorphism（特定多态，也译作特设多态）
-- Parametric polymorphism（参数化多态）
-- Subtyping（子类型多态）
-- Row polymorphism（行多态）
+动态多态（dynamic polymorphism）:生效于运行期。
+静态多态（static polymorphism）：将不同的特殊行为和单个泛化记号相关联，由于这种关联处理于编译期而非运行期，因此被称为“静态”。可以用来实现类型安全、运行高效的同质对象集合操作。C++ STL不采用动态多态来实现就是个例子。
+
+根据表现形式有如下四种常见分类:
+
+- 特设多态(Ad-hoc Polymorphism)
+- 参数化多态(Parametric Polymorphism)
+- 子类型多态(Subtyping Polymorphism)
+- 变体多态(Row Polymorphism)
 
 别被这些名词概念唬住，下面我们就通过代码实例来一一过一遍。
 
@@ -53,8 +51,6 @@ publicvoidprint(Image image){
 
 **参数化多态**和特定多态都是同一年由同一人提出的，最开始由 ML 语言实现（1975年），时至今日，几乎所有的现代化语言都有对应特性进行支持，比如 D 和 C++ 中的模板，C#、Delphi 和 Java 中的泛型。
 
-对于它的好处，我从 wiki 摘录了一段
-
 参数多态就是定义类型时候，或者某个类型的实现时候（比如类，函数，变量等）保留类型参数，等以后在使用时候，由程序员或者编译器补上适当的类型参数。有时候也会被叫做泛型编程。一般这也是编译期决定的，也是静态多态
 
 >  参数化多态使得编程语言在保留了静态语言的类型安全特性的同时又增强了其表达能力
@@ -82,12 +78,11 @@ wiki 上有一段描述参数化多态与特定多态的区别我觉得非常形
 以下面的  Java 代码为例， Car 分别有 SmallCar、BigCar 两个子类 
 
 ```
-abstractclassCar{}
+abstract class Car{}
 
-classSmallCarextendsCar{}
+class Small CarextendsCar{}
 
-classBigCarextendsCar{}
-复制代码
+class BigCarextendsCar{}
 ```
 
 那么在 priceOfCar函数内，BigCar 和 SmallCar 就是可以相互替换的了
@@ -128,23 +123,22 @@ Let {\displaystyle q(x)}q(x) be a property provable about objects {\displaystyle
 
 假设我们现在有一个特质 (类似于 Java 的接口)  `Event` ，它是对业务事件的抽象， EventListener 则是事件的处理类， 它的 listen 函数接受 Event 对象作为参数。
 
-```
-traitEvent{
+```scala
+trait Event{
     defpayload(): String
 }
 
-classInitEventextendsEvent{
+class InitEventextendsEvent{
   overridedefpayload(): String = {
     // TODO
   }
 }
 
-classEventListener{
+class EventListener{
     deflisten(event: Event): Unit = {
         //TODO
     }
 }
-复制代码
 ```
 
 正常情况下我们会这样来使用
