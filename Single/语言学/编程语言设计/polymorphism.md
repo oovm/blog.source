@@ -1,25 +1,20 @@
+## Polymorphism
 
-# 多态
+在编程语言和类型论中, 多态(Polymorphism)指为不同数据类型的实体提供统一的接口
 
-标签（空格分隔）： 未分类
+多态类型(Polymorphic Type)可以将自身所支持的操作套用到其它类型的值上.
 
----
+一般根据条件可以将多态分为以下两种:
 
-## 前言
+动态多态（dynamic polymorphism）:生效于运行期。
+静态多态（static polymorphism）：将不同的特殊行为和单个泛化记号相关联，由于这种关联处理于编译期而非运行期，因此被称为“静态”。可以用来实现类型安全、运行高效的同质对象集合操作。C++ STL不采用动态多态来实现就是个例子。
 
-封装、继承、多态作为 OOP 世界的老三样，几乎是必背的关键词。
+根据表现形式有如下四种常见分类:
 
-而在刚学习 Java 的很长一段时间，我对多态的理解一直处理很迷糊的状态，重载是多态吗？泛型是多态吗？继承关系是多态吗？
-
-实际上都是，无论重载、泛型，还是继承关系都是多态的一个具体体现，也被归属为不同的多态分类
-
-- Ad hoc polymorphism（特定多态，也译作特设多态）
-- Parametric polymorphism（参数化多态）
-- Subtyping（子类型多态）
-
-当然不止上面三种分类，像 Scala 就还有另外一种多态分类
-
-- Row polymorphism（行多态）
+- 特设多态(Ad-hoc Polymorphism)
+- 参数化多态(Parametric Polymorphism)
+- 子类型多态(Subtyping Polymorphism)
+- 变体多态(Row Polymorphism)
 
 别被这些名词概念唬住，下面我们就通过代码实例来一一过一遍。
 
@@ -27,10 +22,13 @@
 
 **特设多态**是由 [Christopher Strachey](https://en.wikipedia.org/wiki/Christopher_Strachey) 在 1967 年提出来的，从它的取名我们可以大概猜到，它是针对于特定问题的多态方案，比如：
 
-- 函数重载
-- 操作符重载
+- 函数重载(Function Overloading)
+- 运算符重载(Operator Overloading)
+- 宏多态(Macro Polymorphism)
 
 **函数重载**指的是多个函数拥有相同的名称，但却拥有不同的实现。
+
+特设多态的意思是，一个函数有，有限数量的多种不同的实现，依赖参数的类型来选择调用特定版本的函数实现。这种选择在编译期就可以判断，所以称为静态多态。
 
 比如下面的函数重载示例，展示了两个名为 `print` 的 函数，一个打印字符串，一个打印图像。
 
@@ -53,7 +51,7 @@ publicvoidprint(Image image){
 
 **参数化多态**和特定多态都是同一年由同一人提出的，最开始由 ML 语言实现（1975年），时至今日，几乎所有的现代化语言都有对应特性进行支持，比如 D 和 C++ 中的模板，C#、Delphi 和 Java 中的泛型。
 
-对于它的好处，我从 wiki 摘录了一段
+参数多态就是定义类型时候，或者某个类型的实现时候（比如类，函数，变量等）保留类型参数，等以后在使用时候，由程序员或者编译器补上适当的类型参数。有时候也会被叫做泛型编程。一般这也是编译期决定的，也是静态多态
 
 >  参数化多态使得编程语言在保留了静态语言的类型安全特性的同时又增强了其表达能力
 
@@ -80,12 +78,11 @@ wiki 上有一段描述参数化多态与特定多态的区别我觉得非常形
 以下面的  Java 代码为例， Car 分别有 SmallCar、BigCar 两个子类 
 
 ```
-abstractclassCar{}
+abstract class Car{}
 
-classSmallCarextendsCar{}
+class Small CarextendsCar{}
 
-classBigCarextendsCar{}
-复制代码
+class BigCarextendsCar{}
 ```
 
 那么在 priceOfCar函数内，BigCar 和 SmallCar 就是可以相互替换的了
@@ -105,6 +102,13 @@ public BigDecimal priceOfCar(Car car){
 
 而继承则是编程语言的一种特性，换句话说，就是通过继承描述了子类型关系。
 
+在面向对象的程序设计中，里氏替换原则（Liskov Substitution principle）是对子类型的特别定义。它由芭芭拉·利斯科夫（Barbara Liskov）在1987年在一次会议上名为“数据的抽象与层次”的演说中首先提出。[1]
+
+里氏替换原则的内容可以描述为： “派生类（子类）对象可以在程序中代替其基类（超类）对象。” 以上内容并非利斯科夫的原文，而是译自罗伯特·马丁（Robert Martin）对原文的解读。其原文为：
+
+Let {\displaystyle q(x)}q(x) be a property provable about objects {\displaystyle x}x of type {\displaystyle T}T. Then {\displaystyle q(y)}q(y) should be true for objects {\displaystyle y}y of type {\displaystyle S}S where {\displaystyle S}S is a subtype of {\displaystyle T}T.
+芭芭拉·利斯科夫与周以真（Jeannette Wing）在1994年发表论文并提出以上的Liskov代换原则。
+
 ## Row polymorphism
 
 变体多态
@@ -119,23 +123,22 @@ public BigDecimal priceOfCar(Car car){
 
 假设我们现在有一个特质 (类似于 Java 的接口)  `Event` ，它是对业务事件的抽象， EventListener 则是事件的处理类， 它的 listen 函数接受 Event 对象作为参数。
 
-```
-traitEvent{
+```scala
+trait Event{
     defpayload(): String
 }
 
-classInitEventextendsEvent{
+class InitEventextendsEvent{
   overridedefpayload(): String = {
     // TODO
   }
 }
 
-classEventListener{
+class EventListener{
     deflisten(event: Event): Unit = {
         //TODO
     }
 }
-复制代码
 ```
 
 正常情况下我们会这样来使用
@@ -214,16 +217,3 @@ listener.listen(newOldEvent())
 回到标题，现在你们都知道多态了，那么放心的去谈对象吧......
 
 什么？没有对象，自己 new 一个呀（程序员老梗~）
-
-## 参考
-
-1. [Polymorphism (computer science)](https://en.wikipedia.org/wiki/Polymorphism_(computer_science)) (target=undefined rel=undefined)
-2. [Ad_hoc_polymorphism](https://en.wikipedia.org/wiki/Ad_hoc_polymorphism) (target=undefined rel=undefined)
-3. [Parametric polymorphism](https://en.wikipedia.org/wiki/Parametric_polymorphism) (target=undefined rel=undefined)
-4. [Subtyping](https://en.wikipedia.org/wiki/Subtyping) (target=undefined rel=undefined)
-5. [Row polymorphism](https://en.wikipedia.org/wiki/Row_polymorphism) (target=undefined rel=undefined)
-6. [nominative type system](https://en.wikipedia.org/wiki/Nominal_type_system) (target=undefined rel=undefined)
-7. [structural type system](https://en.wikipedia.org/wiki/Structural_type_system) (target=undefined rel=undefined)
-
-
-

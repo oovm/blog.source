@@ -63,13 +63,16 @@ wx,xd,xj,xk,yq,zf,zj,zx
 
 ### 英文各字母使用频率？
 
-https://www.zhihu.com/question/23111432
+count=CharacterCounts[StringJoin@DictionaryLookup[{"English","*"}],IgnoreCase->True]
+sort=Sort[count//KeySelect[#,MemberQ[Alphabet[],#]&]&]
+BarChart[sort,ChartLabels->Placed[Keys[sort]//Style[#,20,Red]&/@#&,Above],ChartElementFunction->"GlassRectangle",ChartStyle->"Pastel"]
 
 
 ### 英语单词 26 个首字母出现概率各是多少？
 
-https://www.zhihu.com/question/30077599
+count=CountsBy[DictionaryLookup[{"English","*"}],Characters[#][[1]]&];
+sort=Sort[count//KeySelect[#,MemberQ[Alphabet[],#]&]&]
+BarChart[sort,ChartLabels->Placed[Keys[sort]//Style[#,20,Red]&/@#&,Above],ChartElementFunction->"GlassRectangle",ChartStyle->"Pastel"]
 
-## 英语单词哪个字母出现频率最高?
 
-https://www.zhihu.com/question/19805834/answer/67555450
+https://en.wikipedia.org/wiki/Letter_frequency
