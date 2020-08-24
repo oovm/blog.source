@@ -5,20 +5,17 @@
 
 ---
 
-## 前言
+## Polymorphism
 
-封装、继承、多态作为 OOP 世界的老三样，几乎是必背的关键词。
+在编程语言和类型论中，多态（英语：polymorphism）指为不同数据类型的实体提供统一的接口。 [1]多态类型（英语：polymorphic type）可以将自身所支持的操作套用到其它类型的值上。[2]
 
-而在刚学习 Java 的很长一段时间，我对多态的理解一直处理很迷糊的状态，重载是多态吗？泛型是多态吗？继承关系是多态吗？
+计算机程序运行时，相同的消息可能会送给多个不同的类别之对象，而系统可依据对象所属类别，引发对应类别的方法，而有不同的行为。简单来说，所谓多态意指相同的消息给予不同的对象会引发不同的动作。多态也可定义为“一种将不同的特殊行为和单个泛化记号相关联的能力”。
 
 实际上都是，无论重载、泛型，还是继承关系都是多态的一个具体体现，也被归属为不同的多态分类
 
 - Ad hoc polymorphism（特定多态，也译作特设多态）
 - Parametric polymorphism（参数化多态）
 - Subtyping（子类型多态）
-
-当然不止上面三种分类，像 Scala 就还有另外一种多态分类
-
 - Row polymorphism（行多态）
 
 别被这些名词概念唬住，下面我们就通过代码实例来一一过一遍。
@@ -27,10 +24,13 @@
 
 **特设多态**是由 [Christopher Strachey](https://en.wikipedia.org/wiki/Christopher_Strachey) 在 1967 年提出来的，从它的取名我们可以大概猜到，它是针对于特定问题的多态方案，比如：
 
-- 函数重载
-- 操作符重载
+- 函数重载(Function Overloading)
+- 运算符重载(Operator Overloading)
+- 宏多态(Macro Polymorphism)
 
 **函数重载**指的是多个函数拥有相同的名称，但却拥有不同的实现。
+
+特设多态的意思是，一个函数有，有限数量的多种不同的实现，依赖参数的类型来选择调用特定版本的函数实现。这种选择在编译期就可以判断，所以称为静态多态。
 
 比如下面的函数重载示例，展示了两个名为 `print` 的 函数，一个打印字符串，一个打印图像。
 
@@ -54,6 +54,8 @@ publicvoidprint(Image image){
 **参数化多态**和特定多态都是同一年由同一人提出的，最开始由 ML 语言实现（1975年），时至今日，几乎所有的现代化语言都有对应特性进行支持，比如 D 和 C++ 中的模板，C#、Delphi 和 Java 中的泛型。
 
 对于它的好处，我从 wiki 摘录了一段
+
+参数多态就是定义类型时候，或者某个类型的实现时候（比如类，函数，变量等）保留类型参数，等以后在使用时候，由程序员或者编译器补上适当的类型参数。有时候也会被叫做泛型编程。一般这也是编译期决定的，也是静态多态
 
 >  参数化多态使得编程语言在保留了静态语言的类型安全特性的同时又增强了其表达能力
 
@@ -221,16 +223,3 @@ listener.listen(newOldEvent())
 回到标题，现在你们都知道多态了，那么放心的去谈对象吧......
 
 什么？没有对象，自己 new 一个呀（程序员老梗~）
-
-## 参考
-
-1. [Polymorphism (computer science)](https://en.wikipedia.org/wiki/Polymorphism_(computer_science)) (target=undefined rel=undefined)
-2. [Ad_hoc_polymorphism](https://en.wikipedia.org/wiki/Ad_hoc_polymorphism) (target=undefined rel=undefined)
-3. [Parametric polymorphism](https://en.wikipedia.org/wiki/Parametric_polymorphism) (target=undefined rel=undefined)
-4. [Subtyping](https://en.wikipedia.org/wiki/Subtyping) (target=undefined rel=undefined)
-5. [Row polymorphism](https://en.wikipedia.org/wiki/Row_polymorphism) (target=undefined rel=undefined)
-6. [nominative type system](https://en.wikipedia.org/wiki/Nominal_type_system) (target=undefined rel=undefined)
-7. [structural type system](https://en.wikipedia.org/wiki/Structural_type_system) (target=undefined rel=undefined)
-
-
-
