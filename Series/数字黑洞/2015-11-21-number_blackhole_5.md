@@ -1,20 +1,7 @@
----
-title: 数字黑洞 V: 角谷猜想
-author: Aster
-type: post
-date: 2015-11-21T12:29:46+00:00
-url: /2015/11/number_blackhole_5/
-featured_image: /wp-content/uploads/2015/11/Number_Blackhole_5_BG-100x75.jpg
-duoshuo_thread_id:
-  - "6373465152481657602"
-categories:
-  - CODE➤GEASS
-  - 理宅异闻录
-tags:
-  - Haskell
-  - 数字黑洞
+\title: 数字黑洞 IV: 角谷猜想
+\date: 2013-11-21 12:29:46
+\cats: Number Theory
 
----
 上面说了那么多, 我们终于进入了最终章, 有请被誉为费马大定理继承者的角谷猜想出场!!!
 
 > 对任意自然数, 如果是奇数就乘 3 加 1, 如果是偶数就除以 2. 经过有限次操作后一定能收敛到 4→2→1 循环.
@@ -105,7 +92,7 @@ foo n = sortBy (comparing snd) $ stamax n
 
 $$f(z) = \frac{1}{4}[2 + 7z - (2 + 5z)\cos (\pi z)]$$
 
-把这个式子翻译到 $Ultra Fractal$ 中
+把这个式子翻译到 `Ultra Fractal` 中
 
 ```cpp
 Collatz {

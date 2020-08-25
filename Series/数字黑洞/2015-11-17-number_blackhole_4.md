@@ -1,20 +1,7 @@
----
-title: 数字黑洞 IV: 回文黑洞
-author: Aster
-type: post
-date: 2015-11-16T16:25:14+00:00
-url: /2015/11/number_blackhole_4/
-featured_image: /wp-content/uploads/2015/11/Number_Blackhole_4_BG-100x75.jpg
-duoshuo_thread_id:
-  - "6373465152380994305"
-categories:
-  - CODE➤GEASS
-  - 理宅异闻录
-tags:
-  - Haskell
-  - 数字黑洞
+\title: 数字黑洞 III: 回文黑洞
+\date: 2013-11-16 16:25:14
+\cats: Number Theory
 
----
 两边对称的数被称为回文数, 比如 11, 比如 121, 个位数算不算有争议, 我一般是计入个位数的.
 
 有个猜想说任意数字, 将其反转与原数字相加后一定能得到回文数, 举个例子 196, 你们可以手算验证下这个猜想.

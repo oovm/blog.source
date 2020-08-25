@@ -1,20 +1,6 @@
----
-title: 数字黑洞 III: 数位黑洞
-author: Aster
-type: post
-date: 2015-11-14T05:34:30+00:00
-url: /2015/11/number_blackhole_3/
-featured_image: /wp-content/uploads/2015/11/Number_Blackhole_3_BG-100x53.jpg
-duoshuo_thread_id:
-  - "6373465143514235649"
-categories:
-  - CODE➤GEASS
-  - 理宅异闻录
-tags:
-  - Haskell
-  - 数字黑洞
-
----
+\title: 数字黑洞 II: 数位黑洞
+\date: 2013-11-14 05:34:30
+\cats: Number Theory
 
 水仙花数就告一段落了, 下面来讲一些其他在数位上做文章的数字黑洞.
 

@@ -1,8 +1,6 @@
 \title: 数字黑洞 I: 水仙花数
-\url: number_blackhole_1
 \date: 2013-11-06 04:05:31
 \cats: Number Theory
-\tags: haskell
 
 水仙花数是指**一个 n 位数，它的每个数位上的数字的 n 次幂之和等于它本身**的数.
 
