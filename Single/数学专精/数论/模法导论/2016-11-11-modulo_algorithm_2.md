@@ -1,91 +1,12 @@
----
-title: 模法导论(下)
-author: Aster
-type: post
-date: 2016-11-11T14:22:22+00:00
-url: /2016/11/modulo_algorithm_2/
-featured_image: /wp-content/uploads/2016/11/modulo_algorithm_2_a-1-100x26.jpeg
-page_preloader:
-  - 'false'
-theme_header_style:
-  - "1"
-theme_header_align:
-  - left
-theme_toolbar_toggle:
-  - 'true'
-background_selector_orientation:
-  - full_width_layout
-body_color_gradient:
-  - single
-body_color_gradient_style:
-  - linear
-body_color_gradient_angle:
-  - vertical
-body_size:
-  - 'false'
-body_source:
-  - no-image
-body_parallax:
-  - 'false'
-page_color_gradient:
-  - single
-page_color_gradient_style:
-  - linear
-page_color_gradient_angle:
-  - vertical
-page_size:
-  - 'false'
-page_source:
-  - no-image
-page_parallax:
-  - 'false'
-header_color_gradient:
-  - single
-header_color_gradient_style:
-  - linear
-header_color_gradient_angle:
-  - vertical
-header_size:
-  - 'false'
-header_source:
-  - no-image
-header_parallax:
-  - 'false'
-banner_color_gradient:
-  - single
-banner_color_gradient_style:
-  - linear
-banner_color_gradient_angle:
-  - vertical
-banner_size:
-  - 'false'
-banner_source:
-  - no-image
-banner_parallax:
-  - 'false'
-footer_color_gradient:
-  - single
-footer_color_gradient_style:
-  - linear
-footer_color_gradient_angle:
-  - vertical
-footer_size:
-  - 'false'
-footer_source:
-  - no-image
-footer_parallax:
-  - 'false'
-categories:
-  - CODE➤GEASS
-  - 理宅异闻录
-tags:
-  - 模运算
-  - 科普
+\title: 模法导论 (下)
+\date: 2016-11-11 14:22:22
+\url: modulo_algorithm_2
+\cats: Algorithm, Number Theory
 
----
-# 高阶模法
 
-  * 幂塔求模
+## 高阶模法
+
+- 幂塔求模
 
 下面是本模导书的重点所在了.所谓幂塔就是形如${a^{{b^c}}}$的存在,基本上c稍微大一点就是算不出来的了.大丈夫,我们不是有上面的欧拉幂模定理大法吗?
 
@@ -101,7 +22,7 @@ $$\begin{aligned}
 &= \cdots = 24\quad\textbf{Wrong process!}  
 \end{aligned}$$
 
-<!--more-->
+\read_more
 
 这题很巧,就算用了错误的方法答案还是对的,3^4^5mod12就能让你得0分,而且据我所知高考的时候答案对过程全错只有两分安慰分...
 
